@@ -1,0 +1,24 @@
+App\Entity\Scenario:
+
+  attributes:
+    input: App\Dto\ScenarioInput
+    output: App\Dto\ScenarioOutput
+      
+  collectionOperations:
+    get:
+      method: 'GET'
+    post:
+      method: 'POST'
+  
+  itemOperations:
+    get:
+      method: 'GET'
+    put:
+      method: 'PUT'
+    delete:
+      method: 'DELETE'
+    get_steps:
+      method: 'GET'
+      path: '/scenarios/{id}/steps'
+      # Does not exist but needs to be supplied
+      controller: 'App\Controller\GetSteps'

@@ -1,0 +1,44 @@
+<?php
+
+declare(strict_types = 1);
+
+namespace App\CodeParser\NodeVisitor;
+
+use PhpParser\NodeVisitorAbstract;
+use PhpParser\Node;
+use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\NodeTraverser;
+
+/**
+ * Searches for a method inside a node-tree.
+ * 
+ * @author Gerald Baumeister <gerald.b@whosonlocation.com>
+ * @package Fantestic
+ */
+class OverwriteMethodNodeVisitor extends NodeVisitorAbstract
+{
+    private string $methodName;
+    /**
+     * @var Node[]
+     */
+    private array $methodBody;
+
+    /**
+     * @var string $methodName
+     * @var Node[] $stmts
+     */
+    public function __construct(string $methodName, array $methodBody)
+    {
+        $this->methodName = $methodName;
+        $this->methodBody = $methodBody;
+    }
+
+    public function leaveNode(Node $node) :?int
+    {
+        if ($node instanceof ClassMethod && $node->name === $this->methodName) {
+            $node->stmts = $this->methodBody;
+            return NodeTraverser::STOP_TRAVERSAL;
+        }
+        return null;
+    }
+}

@@ -1,0 +1,10 @@
+App\Entity\Action:
+
+  attributes:
+    output: App\Dto\ActionOutput
+      
+  collectionOperations:
+    get:
+      method: 'GET'
+  
+  itemOperations: []
