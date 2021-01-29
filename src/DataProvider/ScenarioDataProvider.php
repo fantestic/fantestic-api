@@ -15,6 +15,7 @@ use App\CodeParser\CestLoader;
  * DataProvider to access Scenarios inside Cest-files.
  * 
  * @author Gerald Baumeister <gerald.b@whosonlocation.com>
+ * @license http://www.apache.org/licenses/LICENSE-2.0
  */
 final class ScenarioDataProvider implements CollectionDataProviderInterface, ItemDataProviderInterface
 {

@@ -14,6 +14,7 @@ use App\Entity\Collection;
  * 
  * @author Gerald Baumeister <gerald.b@whosonlocation.com>
  * @see: https://api-platform.com/docs/core/dto/
+ * @license http://www.apache.org/licenses/LICENSE-2.0
  * 
  */
 final class CollectionInputDataTransformer implements DataTransformerInterface

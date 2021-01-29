@@ -9,6 +9,7 @@ use ApiPlatform\Core\Annotation\ApiProperty;
 
 /**
  * A Collection of Scenarios. Represents a Cest Class.
+ * @license http://www.apache.org/licenses/LICENSE-2.0
  * 
  */
 class Collection

@@ -11,6 +11,7 @@ use App\CodeParser\Action\ParameterTypeInterface;
  * 
  * @author Gerald Baumeister <gerald.b@whosonlocation.com>
  * @package Fantestic
+ * @license http://www.apache.org/licenses/LICENSE-2.0
  * 
  */
 class PageElementIdentifier implements ParameterTypeInterface

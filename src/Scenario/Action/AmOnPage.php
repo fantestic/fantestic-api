@@ -13,6 +13,7 @@ use App\CodeParser\ParameterType\UrlPath;
  * 
  * @author Gerald Baumeister <gerald.b@whosonlocation.com>
  * @package Fantestic
+ * @license http://www.apache.org/licenses/LICENSE-2.0
  */
 class AmOnPage implements ActionInterface
 {

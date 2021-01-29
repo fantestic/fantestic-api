@@ -11,6 +11,7 @@ use ApiPlatform\Core\Annotation\ApiProperty;
 
 /**
  * Possible Actions a Scenario can be composed of.
+ * @license http://www.apache.org/licenses/LICENSE-2.0
  * @ApiResource
  */
 class Action
