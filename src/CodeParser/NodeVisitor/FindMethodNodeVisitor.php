@@ -14,11 +14,12 @@ use PhpParser\NodeTraverser;
  * 
  * @author Gerald Baumeister <gerald.b@whosonlocation.com>
  * @package Fantestic
+ * @license http://www.apache.org/licenses/LICENSE-2.0
  */
 class FindMethodNodeVisitor extends NodeVisitorAbstract
 {
     private string $methodName;
-    private Node $methodNode;
+    private ?Node $methodNode = null;
 
     public function __construct(string $methodName)
     {
@@ -27,7 +28,7 @@ class FindMethodNodeVisitor extends NodeVisitorAbstract
 
     public function leaveNode(Node $node) :?int
     {
-        if ($node instanceof ClassMethod && $node->name === $this->methodName) {
+        if ($node instanceof ClassMethod && $node->name->toString() === $this->methodName) {
             $this->methodNode = $node;
             return NodeTraverser::STOP_TRAVERSAL;
         }
