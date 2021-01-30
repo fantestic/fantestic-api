@@ -15,7 +15,7 @@ use App\CodeParser\NodeVisitor\OverwriteMethodNodeVisitor;
 use App\Entity\Scenario;
 
 /**
- * Wraps around a Cest and gives easy access to read and manipulate the Cest.
+ * Wraps around a Cest ClassNode and offers ways to manipulate it's scenarios.
  * 
  * @author Gerald Baumeister <gerald.b@whosonlocation.com>
  * @package Fantestic
@@ -47,7 +47,7 @@ class CestWrapper
         } else {
             $this->updateScenario($scenario, $body);
         }
-        
+
         return $this;
     }
 
