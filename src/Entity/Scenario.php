@@ -13,6 +13,7 @@ use ApiPlatform\Core\Annotation\ApiProperty;
  * 
  * 
  * @author Gerald Baumeister <gerald.b@whosonlocation.com>
+ * @license http://www.apache.org/licenses/LICENSE-2.0
  * 
  */
 class Scenario
@@ -36,15 +37,11 @@ class Scenario
 
     private Collection $collection;
 
-    public function __construct(string $id = null)
+    public function __construct(string $id, Collection $collection)
     {
-        $this->collection = new Collection('Test123');
-        $this->id = $id;
-        $this->steps = [
-            new Step(),
-            new Step(),
-            new Step(),
-        ];
+        $this->collection = $collection;
+        $this->setId($id);
+        $this->steps = [];
     }
 
     /**
@@ -55,8 +52,8 @@ class Scenario
      */
     public function setId(string $id) :self
     {
-        if (!preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff\\\\]*[a-zA-Z0-9_\x7f-\xff]$/', $id)) {
-          throw new \OutOfRangeException("'{$id}' is not a valid ClassName");
+        if (!preg_match('/^[a-zA-Z_\x80-\xff][a-zA-Z0-9_\x80-\xff]*$/', $id)) {
+          throw new \OutOfRangeException("'{$id}' is not a valid function name.");
         }
         $this->id = $id;
         return $this;
@@ -78,6 +75,12 @@ class Scenario
     public function getSteps() :array
     {
         return $this->steps;
+    }
+
+    public function addStep(Step $step) :self
+    {
+        $this->steps[] = $step;
+        return $this;
     }
 
     public function getCollection() :Collection

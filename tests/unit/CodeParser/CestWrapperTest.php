@@ -6,7 +6,7 @@ namespace App\Tests\CodeParser;
 
 use App\CodeParser\CestWrapper;
 use App\Entity\Scenario;
-use App\Entity\Step;
+use App\Entity\Collection;
 use PhpParser\ParserFactory;
 use PhpParser\Node\Stmt\Class_;
 
@@ -18,11 +18,11 @@ class CestWrapperTest extends \Codeception\Test\Unit
     {
     }
 
-    public function testFindsScenario() :void
+    public function testFindsAlreadyExistingScenarios() :void
     {
         $class = $this->getClass_('Empty');
         $wrapper = new CestWrapper($class);
-        $scenario = new Scenario('firstTest');
+        $scenario = new Scenario($class->stmts[0]->name->toString(), $this->createCollectionMock());
         $methodNode = $wrapper->findScenario($scenario);
         $this->assertEquals($class->stmts[0], $methodNode);
     }
@@ -31,7 +31,7 @@ class CestWrapperTest extends \Codeception\Test\Unit
     {
         $class = $this->getClass_('Empty');
         $wrapper = new CestWrapper($class);
-        $scenario = new Scenario('addedTest');
+        $scenario = $this->createScenarioMock();
         $wrapper->writeScenario($scenario);
         $method = $wrapper->findScenario($scenario);
         $this->assertNotNull($method);
@@ -53,5 +53,23 @@ class CestWrapperTest extends \Codeception\Test\Unit
     private function getTemplate($name) :string
     {
         return file_get_contents(__DIR__ . "/Templates/{$name}.php.tpl");
+    }
+
+    private function createScenarioMock() :Scenario
+    {
+        /**
+         * @var Scenario
+         */
+        $s = $this->createMock(Scenario::class);
+        return $s;
+    }
+
+    private function createCollectionMock() :Collection
+    {
+        /**
+         * @var Collection
+         */
+        $s = $this->createMock(Collection::class);
+        return $s;
     }
 }

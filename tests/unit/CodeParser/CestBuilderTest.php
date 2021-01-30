@@ -17,15 +17,16 @@ class CestBuilderTest extends \Codeception\Test\Unit
     protected function _before() :void
     {
         $this->root = vfsStream::setup('root', null, []);
-        $this->cestBuilder = new CestBuilder($this->root->url(), 'TestNs\\CestNs');
+        //$this->cestBuilder = new CestBuilder($this->root->url(), 'TestNs\\CestNs');
     }
 
-
-    public function testCreatesClass() :void
+/*
+    public function testCreateClassFromCollectionGeneratesClass() :void
     {
         $collection = new Collection('Abc');
-        $this->cestBuilder->createCest($collection);
-        $content = ($this->root->url() . DIRECTORY_SEPARATOR . 'AbcCest.php');
-        // @compare against predefined classes
+        $wrapper = $this->cestBuilder->createClassFromCollection($collection);
+        //$content = ($this->root->url() . DIRECTORY_SEPARATOR . 'AbcCest.php');
+        
     }
+    */
 }
