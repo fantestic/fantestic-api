@@ -10,7 +10,7 @@ use SplFileInfo;
 use OutOfBoundsException;
 
 /**
- * Manages Reading of CestFiles 
+ * Searches the filesystem for Cest-Files. 
  * 
  * @author Gerald Baumeister <gerald.b@whosonlocation.com>
  * @package Fantestic
@@ -30,7 +30,7 @@ class CestLoader
 
 
     /**
-     * @return Collection[]
+     * @return iterable|Collection[]
      */
     public function findCests() :iterable
     {

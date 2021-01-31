@@ -26,10 +26,12 @@ class CestWrapper
     private Class_ $classNode;
     private BuilderFactory $factory;
 
+
     public function __construct(Class_ $classNode) {
         $this->classNode = $classNode;
         $this->factory = new BuilderFactory();
     }
+
 
     public function findScenario(Scenario $scenario) :?ClassMethod
     {
@@ -37,6 +39,13 @@ class CestWrapper
         $this->traverseClass($visitor);
         return $visitor->getMethodNode();
     }
+
+
+    public function getClassname() :string
+    {
+        return $this->classNode->name->toString();
+    }
+
 
     public function writeScenario(Scenario $scenario) :self
     {
@@ -47,14 +56,15 @@ class CestWrapper
         } else {
             $this->updateScenario($scenario, $body);
         }
-
         return $this;
     }
+
 
     public function getStmts() :Node
     {
         return $this->classNode;
     }
+
 
     /**
      * @return Node[]
@@ -69,6 +79,7 @@ class CestWrapper
         }
         return $body;
     }
+
 
     /**
      * @param Scenario $scenario

@@ -4,15 +4,20 @@ declare(strict_types = 1);
 
 namespace App\Tests\CodeParser;
 
+// Trait only seem to be autoloaded once
+// @TODO investigate details and report bug
+require_once(__DIR__.'/TestTraits/CestTemplateTrait.php');
+
 use App\CodeParser\CestWrapper;
 use App\Entity\Scenario;
 use App\Entity\Collection;
-use PhpParser\ParserFactory;
-use PhpParser\Node\Stmt\Class_;
+
+use App\Tests\CodeParser\TestTraits\CestTemplateTrait;
 
 
 class CestWrapperTest extends \Codeception\Test\Unit
 {
+    use CestTemplateTrait;
 
     protected function _before() :void
     {
@@ -37,23 +42,6 @@ class CestWrapperTest extends \Codeception\Test\Unit
         $this->assertNotNull($method);
     }
 
-    private function getClass_(string $template) :Class_
-    {
-        $stmts = $this->parseTemplate($template);
-        return $stmts[1]->stmts[0];
-    }
-
-    private function parseTemplate(string $template) :array
-    {
-        $code = $this->getTemplate($template);
-        $factory = (new ParserFactory)->create(ParserFactory::PREFER_PHP7);
-        return $factory->parse($code);
-    }
-
-    private function getTemplate($name) :string
-    {
-        return file_get_contents(__DIR__ . "/Templates/{$name}.php.tpl");
-    }
 
     private function createScenarioMock() :Scenario
     {
