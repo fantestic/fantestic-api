@@ -13,7 +13,23 @@ namespace App\Tests\Fixtures\Cest\Ns1;
 */
 class SimpleCest
 {
+    /**
+     * This is a valid Fantestic Test and should be loaded
+     * @fantestic
+     * @param AcceptanceTester $I 
+     * @return void 
+     */
     public function firstTest(\AcceptanceTester $I)
+    {
+        $I->amOnPage('/');
+    }
+
+    /**
+     * This is not a fantestic test as the fantestic annotation is missing
+     * @param AcceptanceTester $I 
+     * @return void 
+     */
+    public function notForFantestic(\AcceptanceTester $I)
     {
         $I->amOnPage('/');
     }

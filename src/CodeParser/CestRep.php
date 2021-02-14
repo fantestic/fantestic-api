@@ -6,12 +6,15 @@ namespace App\CodeParser;
 use App\CodeParser\Filesystem\Exception\CestNotFoundException;
 use App\CodeParser\NodeVisitor\FindMethodNodeVisitor;
 use App\CodeParser\Factory\ScenarioRepFactory;
+use LogicException;
 use PhpParser\ParserFactory;
 use PhpParser\Error;
 use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\NodeTraverser;
 use PhpParser\NodeVisitor;
+use phpDocumentor\Reflection\DocBlockFactory;
 
 /**
  * CestRep is responsible for manipulating the AST of a Cest Object. It retrieves
@@ -52,10 +55,32 @@ class CestRep
     }
 
 
+    /**
+     * 
+     * @return Node[] 
+     */
+    public function getAst() :array
+    {
+        return $this->ast;
+    }
+
+
+    /**
+     * Searches for a scenario and returns it as a ScenarioRep
+     * 
+     * @param string $methodName 
+     * @return null|ScenarioRep 
+     * @throws LogicException 
+     */
     public function findScenario(string $methodName) :?ScenarioRep
     {
         $visitor = new FindMethodNodeVisitor($methodName);
         $this->traverseAst($visitor);
+        // -----------------------------------
+        // I need to extract the comment (see ScenarioRep and CUT/paste code over)
+        // Then create 2 types of ScenarioRep. Readonly and Writeable
+        // And return Writeable only if @fantestic is given
+        // -----------------------------------
         return $this->scenarioRepFactory->makeFromClassMethod($visitor->getMethodNode());
     }
 
@@ -76,5 +101,13 @@ class CestRep
         $traverser = new NodeTraverser();
         $traverser->addVisitor($visitor);
         $traverser->traverse($this->ast);
+    }
+
+
+    private function commentHasFantesticTag(string $comment)
+    {
+        $factory  = DocBlockFactory::createInstance();
+        $docblock = $factory->create($comment);
+        return $docblock->hasTag('fantestic');
     }
 }

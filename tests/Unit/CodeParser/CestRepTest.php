@@ -17,19 +17,20 @@ final class CestRepTest extends KernelTestCase
     }
 
 
-    public function findsScenario() :void
+    public function testFindsScenario() :void
     {
         $methodName = 'firstTest';
-        $cestRep = $this->getCestRepFactory()->makeFromPath($this->getCestFixturePath('Ns1/SimpleCest'));
+        $cestRep = $this->getCestRepFactory()->makeFromPath($this->getCestFixturePath('/Ns1/SimpleCest.php'));
         $scenarioRep = $cestRep->findScenario($methodName);
         $this->assertInstanceOf(ScenarioRep::class, $scenarioRep);
         $this->assertSame($methodName, $scenarioRep->getMethodName());
     }
 
 
+
     private function getCestRepFactory() :CestRepFactory
     {
-        self::bootKernel();
+        self::bootKernel(['debug' => 0]);
         return self::$container->get(CestRepFactory::class);
     }
 
