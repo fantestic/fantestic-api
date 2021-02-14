@@ -53,7 +53,7 @@ class CestFinder
         return $this->cestRepFactory->makeFromPath($fullyQualifiedPath);
     }
 
-
+    
     private function getClassSubpath(CollectionId $id) :string
     {
         return str_replace('\\', DIRECTORY_SEPARATOR, $id->toString()) . 'Cest.php';

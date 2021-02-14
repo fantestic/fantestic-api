@@ -22,7 +22,7 @@ final class CestFinderTest extends KernelTestCase
 
     public function testFindsCollectionById() :void
     {
-        $cestFinder = $this->makeCestFinder(Finder::create(), $this->getCestFixtureBath());
+        $cestFinder = $this->makeCestFinder(Finder::create(), $this->getCestFixturePath());
         $id = new CollectionId('Ns1\Simple');
         $cestRep = $cestFinder->findCollectionById($id);
         $this->assertInstanceOf(CestRep::class, $cestRep);
@@ -42,7 +42,7 @@ final class CestFinderTest extends KernelTestCase
         return new CestFinder($finder, $basedir,  self::$container->get(CestRepFactory::class));
     }
 
-    private function getCestFixtureBath()
+    private function getCestFixturePath() :string
     {
         return realpath(__DIR__ . '/../../../Fixtures/Cest');
     }

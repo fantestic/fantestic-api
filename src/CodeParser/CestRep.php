@@ -6,6 +6,10 @@ namespace App\CodeParser;
 use App\CodeParser\Filesystem\Exception\CestNotFoundException;
 use PhpParser\ParserFactory;
 use PhpParser\Error;
+use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\NodeTraverser;
+use PhpParser\NodeVisitor;
 
 /**
  * CestRep is responsible for manipulating the AST of a Cest Object. It retrieves
@@ -19,7 +23,8 @@ class CestRep
 {
     private string $fullyQualifiedPath;
     private ParserFactory $parserFactory;
-    private $ast;
+    private array $ast;
+    private Class_ $classNode;
 
     /**
      * @throws CestNotFoundException
@@ -41,6 +46,12 @@ class CestRep
         $this->setupAst();
     }
 
+
+    public function getAst()
+    {
+        return $this->ast;
+    }
+
     /**
      * @throws Error
      * @return void 
@@ -49,5 +60,12 @@ class CestRep
     {
         $parser = $this->parserFactory->create(ParserFactory::PREFER_PHP7);
         $this->ast = $parser->parse(file_get_contents($this->fullyQualifiedPath));
+    }
+
+    private function traverseAst(NodeVisitor $visitor) :void
+    {
+        $traverser = new NodeTraverser();
+        $traverser->addVisitor($visitor);
+        $traverser->traverse($this->ast);
     }
 }

@@ -277,6 +277,9 @@
     "sebastian/version": {
         "version": "3.0.2"
     },
+    "sempro/phpunit-pretty-print": {
+        "version": "1.4.0"
+    },
     "symfony/asset": {
         "version": "v5.2.3"
     },

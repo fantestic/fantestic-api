@@ -21,6 +21,7 @@ services:
             - '../src/Kernel.php'
             - '../src/Tests/'
 
+    # Was not visible in Tests?
     App\CodeParser\Factory\CestRepFactory:
         public: true
 
