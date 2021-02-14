@@ -164,6 +164,9 @@
     "php": {
         "version": "7.4"
     },
+    "php-mock/php-mock": {
+        "version": "2.3.0"
+    },
     "phpdocumentor/reflection-common": {
         "version": "2.2.0"
     },

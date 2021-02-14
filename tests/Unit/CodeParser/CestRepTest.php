@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types = 1);
-namespace App\Tests\CodeParser;
+namespace App\Tests\Unit\CodeParser;
 
 use App\CodeParser\Factory\CestRepFactory;
 use App\CodeParser\Filesystem\Exception\CestNotFoundException;

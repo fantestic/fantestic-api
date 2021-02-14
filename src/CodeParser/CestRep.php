@@ -49,7 +49,5 @@ class CestRep
     {
         $parser = $this->parserFactory->create(ParserFactory::PREFER_PHP7);
         $this->ast = $parser->parse(file_get_contents($this->fullyQualifiedPath));
-        var_dump($this->ast);
-        exit();
     }
 }

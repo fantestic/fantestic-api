@@ -14,7 +14,7 @@ use PhpParser\ParserFactory;
  * @author Gerald Baumeister <gerald@fantestic.io>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  */
-class CestRepFactory
+final class CestRepFactory
 {
     private ParserFactory $parserFactory;
 

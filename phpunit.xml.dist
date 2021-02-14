@@ -12,8 +12,8 @@
     <server name="SHELL_VERBOSITY" value="-1"/>
   </php>
   <testsuites>
-    <testsuite name="Project Test Suite">
-      <directory>tests</directory>
+    <testsuite name="Fantestic Test Suite">
+      <directory>tests/Unit</directory>
     </testsuite>
   </testsuites>
 </phpunit>

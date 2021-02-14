@@ -32,7 +32,9 @@
         "symfony/yaml": "5.2.*"
     },
     "require-dev": {
-        "mikey179/vfsstream": "^1.6"
+        "mikey179/vfsstream": "^1.6",
+        "php-mock/php-mock": "^2.3",
+        "sempro/phpunit-pretty-print": "^1.4"
     },
     "config": {
         "optimize-autoloader": true,

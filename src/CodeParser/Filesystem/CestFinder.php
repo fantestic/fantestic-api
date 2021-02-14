@@ -49,14 +49,16 @@ class CestFinder
      */
     public function findCollectionById(CollectionId $id) :CestRep
     {
-        $fullyQualifiedPath = $this->basedir . $this->getClassSubpath($id);
+        $fullyQualifiedPath = $this->basedir . DIRECTORY_SEPARATOR . $this->getClassSubpath($id);
         return $this->cestRepFactory->makeFromPath($fullyQualifiedPath);
     }
+
 
     private function getClassSubpath(CollectionId $id) :string
     {
         return str_replace('\\', DIRECTORY_SEPARATOR, $id->toString()) . 'Cest.php';
     }
+
 
     /**
      * 
