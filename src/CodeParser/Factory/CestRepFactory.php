@@ -17,10 +17,14 @@ use PhpParser\ParserFactory;
 final class CestRepFactory
 {
     private ParserFactory $parserFactory;
+    private ScenarioRepFactory $scenarioRepFactory;
 
-    public function __construct(ParserFactory $parserFactory)
-    {
+    public function __construct(
+        ParserFactory $parserFactory,
+        ScenarioRepFactory $scenarioRepFactory
+    ) {
         $this->parserFactory = $parserFactory;
+        $this->scenarioRepFactory = $scenarioRepFactory;
     }
 
     /**
@@ -30,6 +34,10 @@ final class CestRepFactory
      */
     public function makeFromPath(string $fullyQualifiedPath) :CestRep
     {
-        return new CestRep($fullyQualifiedPath, $this->parserFactory);
+        return new CestRep(
+            $fullyQualifiedPath,
+            $this->parserFactory,
+            $this->scenarioRepFactory
+        );
     }
 }

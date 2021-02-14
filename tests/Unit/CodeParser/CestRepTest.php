@@ -5,6 +5,7 @@ namespace App\Tests\Unit\CodeParser;
 
 use App\CodeParser\Factory\CestRepFactory;
 use App\CodeParser\Filesystem\Exception\CestNotFoundException;
+use App\CodeParser\ScenarioRep;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 final class CestRepTest extends KernelTestCase
@@ -16,14 +17,13 @@ final class CestRepTest extends KernelTestCase
     }
 
 
-    public function testThrowsExceptionIfClassNotACest() :void
+    public function findsScenario() :void
     {
-        $this->expectException(CestNotFoundException::class);
-        $a = $this->getCestRepFactory()->makeFromPath(
-            //$this->getCestFixturePath('/Invalid/EmptyPhpCest.php')
-            $this->getCestFixturePath('/Ns1/SimpleCest.php')
-        );
-        dump($a->getAst());
+        $methodName = 'firstTest';
+        $cestRep = $this->getCestRepFactory()->makeFromPath($this->getCestFixturePath('Ns1/SimpleCest'));
+        $scenarioRep = $cestRep->findScenario($methodName);
+        $this->assertInstanceOf(ScenarioRep::class, $scenarioRep);
+        $this->assertSame($methodName, $scenarioRep->getMethodName());
     }
 
 

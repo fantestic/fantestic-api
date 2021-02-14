@@ -4,6 +4,8 @@ declare(strict_types = 1);
 namespace App\CodeParser;
 
 use App\CodeParser\Filesystem\Exception\CestNotFoundException;
+use App\CodeParser\NodeVisitor\FindMethodNodeVisitor;
+use App\CodeParser\Factory\ScenarioRepFactory;
 use PhpParser\ParserFactory;
 use PhpParser\Error;
 use PhpParser\Node\Stmt\Class_;
@@ -23,6 +25,7 @@ class CestRep
 {
     private string $fullyQualifiedPath;
     private ParserFactory $parserFactory;
+    private ScenarioRepFactory $scenarioRepFactory;
     private array $ast;
     private Class_ $classNode;
 
@@ -34,7 +37,8 @@ class CestRep
      */
     public function __construct(
         string $fullyQualifiedPath,
-        ParserFactory $parserFactory
+        ParserFactory $parserFactory,
+        ScenarioRepFactory $scenarioRepFactory
     ) {
         if (!file_exists($fullyQualifiedPath)) {
             throw new CestNotFoundException(
@@ -43,14 +47,18 @@ class CestRep
         }
         $this->fullyQualifiedPath = $fullyQualifiedPath;
         $this->parserFactory = $parserFactory;
+        $this->scenarioRepFactory = $scenarioRepFactory;
         $this->setupAst();
     }
 
 
-    public function getAst()
+    public function findScenario(string $methodName) :?ScenarioRep
     {
-        return $this->ast;
+        $visitor = new FindMethodNodeVisitor($methodName);
+        $this->traverseAst($visitor);
+        return $this->scenarioRepFactory->makeFromClassMethod($visitor->getMethodNode());
     }
+
 
     /**
      * @throws Error
@@ -61,6 +69,7 @@ class CestRep
         $parser = $this->parserFactory->create(ParserFactory::PREFER_PHP7);
         $this->ast = $parser->parse(file_get_contents($this->fullyQualifiedPath));
     }
+
 
     private function traverseAst(NodeVisitor $visitor) :void
     {
