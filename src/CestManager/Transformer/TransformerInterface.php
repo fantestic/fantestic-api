@@ -2,7 +2,7 @@
 
 declare(strict_types = 1);
 namespace App\CestManager\Transformer;
-
+use InvalidArgumentException;
 /**
  * Transform between various representations of a value
  * 
@@ -17,6 +17,7 @@ interface TransformerInterface
      * 
      * @param mixed $value 
      * @return mixed 
+     * @throws InvalidArgumentException
      */
     public function transform(mixed $value) :mixed;
 }

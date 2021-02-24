@@ -5,9 +5,10 @@ namespace App\CestManager\Transformer\Collection;
 
 use App\CestManager\Transformer\TransformerInterface;
 use App\CestManager\ValueObject\Collection\Id;
+use InvalidArgumentException;
 
 /**
- * Transforms CollectionIds to paths and vice-versa
+ * Transforms a CestPath to a CollectionId
  * 
  * @package Fantestic/ApiPlatform
  * @author Gerald Baumeister <gerald@fantestic.io>
@@ -27,6 +28,11 @@ final class PathToIdTransformer implements TransformerInterface
      */
     public function transform($path) :Id
     {
+        if (!is_string($path)) {
+            throw new InvalidArgumentException(
+                sprintf('Can only transform strings, %s received.', gettype($path))
+            );
+        }
         $pathWithoutSuffix = substr($path, 0, -1 * strlen($this->suffix));
         return Id::fromReadable($pathWithoutSuffix);
     }

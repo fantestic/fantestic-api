@@ -4,8 +4,9 @@ declare(strict_types = 1);
 namespace App\CestManager\Normalizer\Collection;
 
 use ApiPlatform\Core\Exception\InvalidIdentifierException;
-use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use App\CestManager\ValueObject\Collection\Id;
+use App\CestManager\ValueObject\Exception\InvalidIdentifierStringException;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Exception;
 
 /**
@@ -24,7 +25,7 @@ final class IdNormalizer implements DenormalizerInterface
     {
         try {
             return Id::fromString($data);
-        } catch (Exception $e) {
+        } catch (InvalidIdentifierStringException $e) {
             throw new InvalidIdentifierException($e->getMessage(), $e->getCode(), $e);
         }
     }

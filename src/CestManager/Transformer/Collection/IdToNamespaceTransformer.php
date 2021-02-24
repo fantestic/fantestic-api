@@ -8,21 +8,21 @@ use App\CestManager\ValueObject\Collection\Id;
 use InvalidArgumentException;
 
 /**
- * Transforms CollectionIds to paths
+ * Transforms a CollectionId to a PHP-Namespace
  * 
  * @package Fantestic/ApiPlatform
  * @author Gerald Baumeister <gerald@fantestic.io>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  */
-final class IdToPathTransformer implements TransformerInterface
+final class IdToNamespaceTransformer implements TransformerInterface
 {
     public function __construct(
-        private string $suffix
+        private string $prefix
     ) { }
 
 
     /**
-     * Transform a CollectionId to a CestPath
+     * Transform a CollectionId to a Namespace
      * @param Id $id 
      * @return string 
      */
@@ -33,6 +33,6 @@ final class IdToPathTransformer implements TransformerInterface
                 sprintf('Can only transform "%s", "%s" received.', Id::class, gettype($id))
             );
         } 
-        return $id->toReadable() . $this->suffix;
+        return $this->prefix . $id->toReadable();
     }
 }
