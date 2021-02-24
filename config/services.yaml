@@ -35,6 +35,14 @@ services:
             - '../src/Kernel.php'
             - '../src/Tests/'
             - '../src/CestManager/Entity/'
+    
+    # TODO load from configuration
+    App\CestManager\Transformer\Collection\IdToPathTransformer:
+            arguments:
+                - 'Cest.php'
+    App\CestManager\Transformer\Collection\PathToIdTransformer:
+            arguments:
+                - 'Cest.php'
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class

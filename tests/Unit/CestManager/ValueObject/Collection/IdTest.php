@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types = 1);
-namespace App\Tests\Unit\CestManager\Domain\Scenario;
+namespace App\Tests\Unit\CestManager\ValueObject\Collection;
 
 use App\CestManager\ValueObject\Collection\Id;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
@@ -15,18 +15,18 @@ use App\CestManager\ValueObject\Exception\InvalidIdentifierStringException;
  */
 final class IdTest extends KernelTestCase
 {
-    public function testFromStringDoesNotChangeFromPath() :void
+    public function testFromReadableDoesNotChangeFromPath() :void
     {
-        $path = 'DemoCest.php';
-        $id = Id::fromPath($path);
-        $this->assertEquals($path, $id->toPath());
+        $path = 'Demo/Value';
+        $id = Id::fromReadable($path);
+        $this->assertEquals($path, $id->toReadable());
     }
 
 
-    public function testFromPathFailsOnInvalidCharacters() :void
+    public function testFromReadableFailsOnInvalidCharacters() :void
     {
         $this->expectException(InvalidIdentifierStringException::class);
-        Id::fromPath('$invalidPath');
+        Id::fromReadable('$invalidPath');
     }
 
 

@@ -5,6 +5,8 @@ namespace App\CestManager\Repository;
 
 use App\CestManager\Entity\Collection;
 use App\CestManager\ValueObject\Collection\Id;
+use App\CestManager\Transformer\Collection\IdToPathTransformer;
+use App\CestManager\Transformer\Collection\PathToIdTransformer;
 use Fantestic\CestManager\Finder;
 
 /**
@@ -17,7 +19,9 @@ use Fantestic\CestManager\Finder;
 class CollectionRepository
 {
     public function __construct(
-        private Finder $finder
+        private Finder $finder,
+        private IdToPathTransformer $idToPathTransformer,
+        private PathToIdTransformer $pathToIdTransformer
     ) {}
 
 
@@ -29,7 +33,7 @@ class CollectionRepository
     public function findAll() :iterable
     {
         foreach ($this->finder->listFiles() as $path) {
-            yield new Collection(Id::fromPath($path));
+            yield new Collection($this->pathToIdTransformer->transform($path));
         }
     }
 
@@ -42,7 +46,7 @@ class CollectionRepository
      */
     public function find(Id $id) :?Collection
     {
-        if ($this->finder->hasFile($id->toPath())) {
+        if ($this->finder->hasFile($this->idToPathTransformer->transform($id))) {
             return new Collection($id);
         } else {
             return null;

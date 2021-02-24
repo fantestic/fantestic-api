@@ -39,9 +39,9 @@ final class Id
     }
 
 
-    public static function fromPath(string $path) :self
+    public static function fromReadable(string $path) :self
     {
-        if (1 !== preg_match('/^[a-z0-9-_\/]+\.php$/i', $path)) {
+        if (1 !== preg_match('/^[a-z0-9-_\/]+$/i', $path)) {
             throw new InvalidIdentifierStringException(
                 sprintf('"%s" is not considered a valid Collection Path!', $path)
             );
@@ -57,7 +57,7 @@ final class Id
     }
 
 
-    public function toPath() :string
+    public function toReadable() :string
     {
         return base64_decode(str_replace(['-','_'], ['+','/'], $this->id));
     }
