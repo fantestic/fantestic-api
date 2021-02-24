@@ -18,7 +18,7 @@ use App\CestManager\ValueObject\Collection\Id;
     collectionOperations: ['get'],
     itemOperations: ['get']
 )]
-class Collection
+final class Collection
 {
     #[ApiProperty(identifier:true)]
     protected Id $id;
