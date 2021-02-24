@@ -5,8 +5,7 @@ namespace App\CestManager\Entity;
 
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
-use Symfony\Component\Validator\Constraints as Assert;
-
+use App\CestManager\ValueObject\Collection\Id;
 
 /**
  * 
@@ -15,15 +14,24 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @author Gerald Baumeister <gerald@fantestic.io>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  */
-#[ApiResource]
+#[ApiResource(
+    collectionOperations: ['get'],
+    itemOperations: ['get']
+)]
 class Collection
 {
     #[ApiProperty(identifier:true)]
-    private int $id;
+    protected Id $id;
 
-    /**
-     * 
-     * @var iterable
-     */
-    public iterable $scenarios;
+
+    public function __construct(Id $id)
+    {
+        $this->id = $id;
+    }
+
+
+    public function getId() :Id
+    {
+        return $this->id;
+    }
 }
