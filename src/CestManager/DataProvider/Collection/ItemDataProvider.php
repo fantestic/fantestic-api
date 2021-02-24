@@ -8,6 +8,7 @@ use App\CestManager\Repository\CollectionRepository;
 use App\CestManager\ValueObject\Collection\Id;
 use ApiPlatform\Core\DataProvider\ItemDataProviderInterface;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
+use App\CestManager\ValueObject\Exception\InvalidIdentifierStringException;
 
 /**
  * DataProvider to load Collections into ApiPlatform
@@ -23,17 +24,20 @@ final class ItemDataProvider implements ItemDataProviderInterface, RestrictedDat
         private CollectionRepository $collectionRepository
     ) {}
 
-
+    /**
+     * @inheritdoc
+     */
     public function supports(string $resourceClass, ?string $operationName = null, array $context = []): bool
     {
         return Collection::class === $resourceClass;
     }
 
 
+    /**
+     * @inheritdoc
+     */
     public function getItem(string $resourceClass, $id, ?string $operationName = null, array $context = []) :Collection
     {
-        //@TODO handle 404
-        
-        return new Collection(Id::fromString($id));
+        return $this->collectionRepository->find(Id::fromString($id));
     }
 }

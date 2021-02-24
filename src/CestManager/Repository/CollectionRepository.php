@@ -32,4 +32,20 @@ class CollectionRepository
             yield new Collection(Id::fromPath($path));
         }
     }
+
+
+    /**
+     * Finds a collection or returns null if the collection cant be found.
+     * 
+     * @param Id $id 
+     * @return null|Collection 
+     */
+    public function find(Id $id) :?Collection
+    {
+        if ($this->finder->hasFile($id->toPath())) {
+            return new Collection($id);
+        } else {
+            return null;
+        }
+    }
 }
