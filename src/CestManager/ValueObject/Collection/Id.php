@@ -3,6 +3,8 @@
 declare(strict_types = 1);
 namespace App\CestManager\ValueObject\Collection;
 
+use App\CestManager\ValueObject\Exception\InvalidIdentifierStringException;
+
 /**
  * Identifier for a Collection
  * 
@@ -20,17 +22,30 @@ final class Id
         $this->id = $id;
     }
 
-
+    /**
+     * 
+     * @param string $id 
+     * @return Id 
+     * @throws InvalidIdentifierStringException 
+     */
     public static function fromString(string $id) :self
     {
-        // @TODO VALIDATE
+        if (1 !== preg_match('/^[a-z0-9-_ ]+$/i', $id)) {
+            throw new InvalidIdentifierStringException(
+                sprintf('"%s" is not considered a valid Collection Identifier!', $id)
+            );
+        }
         return new self($id);
     }
 
 
     public static function fromPath(string $path) :self
     {
-        // @TODO VALIDATE
+        if (1 !== preg_match('/^[a-z0-9-_\/]+\.php$/i', $path)) {
+            throw new InvalidIdentifierStringException(
+                sprintf('"%s" is not considered a valid Collection Path!', $path)
+            );
+        }
         $encoded = str_replace(['+','/','='], ['-','_',''], base64_encode($path));
         return new self($encoded);
     }
