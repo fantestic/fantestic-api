@@ -23,6 +23,7 @@ final class ItemDataProvider implements ItemDataProviderInterface, RestrictedDat
         private CollectionRepository $collectionRepository
     ) {}
 
+
     /**
      * @inheritdoc
      */
