@@ -1,0 +1,35 @@
+App\CestManager\Scenario\Entity\Scenario:
+  description: 'A collection of Scenarios'
+#  id:
+#    generationStrategy: none
+
+  properties:
+    id:
+      identifier: true
+      generationStrategy: none
+      writeable: true
+
+  collectionOperations:
+    get:
+      method: 'GET'
+    post:
+      method: 'POST'
+
+  itemOperations:
+    get:
+      method: 'GET'
+    put:
+      method: 'PUT'
+    delete:
+      method: 'DELETE'
+#    scenarios:
+#      method: 'GET'
+#      path: '/collections/{id}/scenarios'
+      # Does not exist but needs to be supplied
+#      controller: 'App/Controller/GetScenarios'
+    #get_steps:
+    #  method: 'GET'
+    #  path: '/scenarios/{id}/steps'
+      # Does not exist but needs to be supplied
+    #  controller: 'App\Controller\GetSteps'
+

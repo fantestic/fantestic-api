@@ -17,13 +17,20 @@ services:
         autowire: true
     Fantestic\CestManager\Finder:
         arguments:
-            - '%kernel.project_dir%/cests'
+            - '%kernel.project_dir%/cests/src'
 
 
     # help api_platform
-    App\CestManager\Normalizer\Collection\IdNormalizer:
+    App\CestManager\Collection\Normalizer\IdDenormalizer:
         tags:
             - { name: api_platform.identifier.denormalizer }
+    App\CestManager\Collection\Normalizer\Normalizer:
+        tags:
+            - { name: api_platform.identifier.normalizer }
+#    App\CestManager\Normalizer\Scenario\IdNormalizer:
+#        tags:
+#            - { name: api_platform.identifier.denormalizer }
+
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -37,12 +44,20 @@ services:
             - '../src/CestManager/Entity/'
     
     # TODO load from configuration
-    App\CestManager\Transformer\Collection\IdToPathTransformer:
+    App\CestManager\Collection\Transformer\IdToPathTransformer:
             arguments:
                 - 'Cest.php'
-    App\CestManager\Transformer\Collection\PathToIdTransformer:
+    App\CestManager\Collection\Transformer\PathToIdTransformer:
             arguments:
                 - 'Cest.php'
+    App\CestManager\Collection\Transformer\IdToNamespaceTransformer:
+            arguments:
+                - 'Cests\'
+                - 'Cest'
+    App\CestManager\Collection\Transformer\TransformerToIdTransformer:
+            arguments:
+                - 'Cests\'
+    
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
