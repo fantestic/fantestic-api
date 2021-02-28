@@ -1,17 +1,20 @@
-App\Entity\Collection:
+App\CestManager\Collection\Entity\Collection:
   description: 'A collection of Scenarios'
   
   id:
     generationStrategy: none
 
   properties:
-    scenario:
+    id:
+      identifier: true
+      generationStrategy: none
+      writeable: true
+    scenarios:
       subresource:
-        resourceClass: 'App\Entity\Scenario'
-
-  attributes:
-    input: App\Dto\CollectionInput
-    output: App\Dto\CollectionOutput
+        resourceClass: 'App\CestManager\Scenario\Entity\Scenario'
+        collection: true
+        identifiers:
+          - ['id', 'App\CestManager\Collection\ValueObject\Id']
       
   collectionOperations:
     get:
