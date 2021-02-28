@@ -15,32 +15,17 @@ use App\CestManager\Exception\ValueObject\InvalidIdentifierStringException;
  */
 final class IdTest extends KernelTestCase
 {
-    public function testFromReadableDoesNotChangeFromPath() :void
+    public function testFromStringDoesNotChangeFromPath() :void
     {
         $path = 'Demo/Value';
-        $id = Id::fromReadable($path);
+        $id = Id::fromString($path);
         $this->assertEquals($path, $id->toReadable());
-    }
-
-
-    public function testFromReadableFailsOnInvalidCharacters() :void
-    {
-        $this->expectException(InvalidIdentifierStringException::class);
-        Id::fromReadable('$invalidPath');
-    }
-
-
-    public function testFromStringDoesNotChangeFromToString() :void
-    {
-        $idString = 'RGVtb0Nlc3QucGhw';
-        $id = Id::fromString($idString);
-        $this->assertEquals($idString, $id->toString());
     }
 
 
     public function testFromStringFailsOnInvalidCharacters() :void
     {
         $this->expectException(InvalidIdentifierStringException::class);
-        Id::fromString('=invalid-id');
+        Id::fromString('$invalidPath');
     }
 }

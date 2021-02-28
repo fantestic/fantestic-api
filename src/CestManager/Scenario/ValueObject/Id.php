@@ -41,7 +41,7 @@ final class Id
 
     public static function fromReadable(string $readable) :self
     {
-        if (1 !== preg_match('/^[a-zA-Z0-9_\/]+::[a-z][a-zA-Z0-9_]*$/', $readable)) {
+        if (1 !== preg_match('/^[a-zA-Z0-9_-]+::[a-z][a-zA-Z0-9_]*$/', $readable)) {
             throw new InvalidIdentifierStringException(
                 sprintf('"%s" is not considered a valid Readable Scenario Id!', $readable)
             );

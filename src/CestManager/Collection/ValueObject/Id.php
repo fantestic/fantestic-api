@@ -24,48 +24,24 @@ final class Id
 
     /**
      * 
-     * @param string $id 
-     * @return Id 
-     * @throws InvalidIdentifierStringException 
-     */
-    public static function fromString(string $id) :self
-    {
-        if (1 !== preg_match('/^[a-z0-9-_]+$/i', $id)) {
-            throw new InvalidIdentifierStringException(
-                sprintf('"%s" is not considered a valid Collection Identifier!', $id)
-            );
-        }
-        return new self($id);
-    }
-
-
-    /**
-     * 
      * @param string $path 
      * @return Id 
      * @throws InvalidIdentifierStringException 
      */
-    public static function fromReadable(string $path) :self
+    public static function fromString(string $path) :self
     {
-        if (1 !== preg_match('/^[a-z0-9_\/]+$/i', $path)) {
+        if (1 !== preg_match('/^[a-z0-9_-]+$/i', $path)) {
             throw new InvalidIdentifierStringException(
                 sprintf('"%s" is not considered a valid Collection Path!', $path)
             );
         }
-        $encoded = str_replace(['+','/','='], ['-','_',''], base64_encode($path));
-        return new self($encoded);
+        return new self($path);
     }
 
 
     public function toString() :string
     {
         return $this->id;
-    }
-
-
-    public function toReadable() :string
-    {
-        return base64_decode(str_replace(['-','_'], ['+','/'], $this->id));
     }
 
 

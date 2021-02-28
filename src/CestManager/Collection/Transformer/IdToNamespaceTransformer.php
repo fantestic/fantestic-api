@@ -34,6 +34,6 @@ final class IdToNamespaceTransformer implements TransformerInterface
                 sprintf('Can only transform "%s", "%s" received.', Id::class, gettype($id))
             );
         }
-        return $this->prefix . str_replace('/', '\\', $id->toReadable()) . $this->suffix;
+        return $this->prefix . str_replace('-', '\\', $id->toString()) . $this->suffix;
     }
 }

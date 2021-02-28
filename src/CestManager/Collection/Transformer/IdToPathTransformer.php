@@ -32,7 +32,8 @@ final class IdToPathTransformer implements TransformerInterface
             throw new InvalidArgumentException(
                 sprintf('Can only transform "%s", "%s" received.', Id::class, gettype($id))
             );
-        } 
-        return $id->toReadable() . $this->suffix;
+        }
+        $path = str_replace('-', DIRECTORY_SEPARATOR, $id->toString());
+        return $path . $this->suffix;
     }
 }

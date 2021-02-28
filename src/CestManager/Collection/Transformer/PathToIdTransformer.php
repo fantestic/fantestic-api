@@ -34,6 +34,7 @@ final class PathToIdTransformer implements TransformerInterface
             );
         }
         $pathWithoutSuffix = substr($path, 0, -1 * strlen($this->suffix));
-        return Id::fromReadable($pathWithoutSuffix);
+        $encodedPath = str_replace('/', '-', $pathWithoutSuffix);
+        return Id::fromString($encodedPath);
     }
 }

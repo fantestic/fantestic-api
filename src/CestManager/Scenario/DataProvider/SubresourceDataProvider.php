@@ -17,6 +17,7 @@ use ApiPlatform\Core\DataProvider\SubresourceDataProviderInterface;
 use Fantestic\CestManager\CestReader\ReflectionCestReader;
 use Fantestic\CestManager\Exception\ClassNotFoundException;
 use App\CestManager\Collection\Entity\Collection;
+use Symfony\Component\VarDumper\VarDumper;
 
 /**
  * DataProvider to load Collections into ApiPlatform
@@ -53,6 +54,7 @@ final class SubresourceDataProvider implements RestrictedDataProviderInterface, 
      */
     public function getSubresource(string $resourceClass, array $identifiers, array $context, ?string $operationName = null) :?iterable
     {
+        $collectionId = CollectionId::fromString($identifiers['id']['id']);
         try {
             $collectionId = CollectionId::fromString($identifiers['id']['id']);
             // try and load Collection prior to ensure we have a valid Collection
@@ -63,10 +65,11 @@ final class SubresourceDataProvider implements RestrictedDataProviderInterface, 
             $names = $this->cestReader->getScenarioNames(
                 $this->idToNamespaceTransformer->transform($collectionId)
             );
+            
             foreach ($names as $name) {
                 // dependency how to build id is hidden here
                 yield new Scenario(ScenarioId::fromReadable(
-                    $collectionId->toReadable().'::'.$name
+                    $collectionId->toString().'::'.$name
                 ));
             }
         } catch (InvalidIdentifierStringException $e) {

@@ -33,7 +33,7 @@ final class NamespaceToIdTransformer implements TransformerInterface
                 sprintf('Can only transform strings, "%s" received.', gettype($namespace))
             );
         }
-        $namespaced = str_replace('\\', '/', $namespace);
-        return Id::fromReadable(substr($namespaced, -1 * strlen($this->prefix) + 1));
+        $namespaced = str_replace('\\', '-', $namespace);
+        return Id::fromString(substr($namespaced, -1 * strlen($this->prefix) + 1));
     }
 }
