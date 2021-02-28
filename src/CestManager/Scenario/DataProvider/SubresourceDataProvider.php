@@ -68,7 +68,7 @@ final class SubresourceDataProvider implements RestrictedDataProviderInterface, 
             
             foreach ($names as $name) {
                 // dependency how to build id is hidden here
-                yield new Scenario(ScenarioId::fromReadable(
+                yield new Scenario(ScenarioId::fromString(
                     $collectionId->toString().'::'.$name
                 ));
             }
