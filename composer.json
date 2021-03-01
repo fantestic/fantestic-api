@@ -31,6 +31,9 @@
         "symfony/validator": "5.2.*",
         "symfony/yaml": "5.2.*"
     },
+    "require-dev": {
+        "symfony/phpunit-bridge": "^5.2"
+    },
     "config": {
         "optimize-autoloader": true,
         "preferred-install": {
