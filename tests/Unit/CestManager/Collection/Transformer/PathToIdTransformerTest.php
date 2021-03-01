@@ -17,7 +17,7 @@ final class PathToIdTransformerTest extends KernelTestCase
 {
     public function testEncodesValue() :void
     {
-        $id = Id::fromReadable('Dir/File');
+        $id = Id::fromString('Dir-File');
         $t = new PathToIdTransformer('Cest.php');
         $this->assertEquals($id, $t->transform('Dir/FileCest.php'));
     }

@@ -17,7 +17,7 @@ final class NamespaceToIdTransformerTest extends KernelTestCase
 {
     public function testEncodesValue() :void
     {
-        $id = Id::fromReadable('Dir/File');
+        $id = Id::fromString('Dir-File');
         $t = new NamespaceToIdTransformer('NsPrefix\\');
         $this->assertEquals($id, $t->transform('NsPrefix\Dir\File'));
     }

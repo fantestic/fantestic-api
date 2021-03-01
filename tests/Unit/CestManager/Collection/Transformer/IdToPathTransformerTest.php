@@ -18,8 +18,8 @@ final class IdToPathTransformerTest extends KernelTestCase
     public function testEncodesValue() :void
     {
         $suffix = 'Cest.php';
-        $id = Id::fromReadable('Abc');
+        $id = Id::fromString('Abc');
         $t = new IdToPathTransformer($suffix);
-        $this->assertEquals($id->toReadable().$suffix, $t->transform($id));
+        $this->assertEquals($id->toString().$suffix, $t->transform($id));
     }
 }

@@ -18,9 +18,9 @@ final class IdToCollectionIdTransformerTest extends KernelTestCase
 {
     public function testEncodesValue() :void
     {
-        $filename = 'Dir/File';
-        $collectionId = CollectionId::fromReadable($filename);
-        $scenarioId = ScenarioId::fromReadable($filename.'::'.'methodname');
+        $idString = 'Dir-File';
+        $collectionId = CollectionId::fromString($idString);
+        $scenarioId = ScenarioId::fromString($idString.'::'.'methodname');
         $t = new IdToCollectionIdTransformer();
         $this->assertEquals($collectionId, $t->transform($scenarioId));
     }

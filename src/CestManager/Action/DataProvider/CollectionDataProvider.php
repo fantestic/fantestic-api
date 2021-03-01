@@ -1,15 +1,16 @@
 <?php
 
 declare(strict_types = 1);
-namespace App\CestManager\Collection\DataProvider;
+namespace App\CestManager\Action\DataProvider;
 
-use App\CestManager\Collection\Entity\Collection;
-use App\CestManager\Collection\CollectionRepository;
+use App\CestManager\Action\Entity\Action;
+use App\CestManager\Action\ActionRepository;
 use ApiPlatform\Core\DataProvider\ContextAwareCollectionDataProviderInterface;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 
+
 /**
- * DataProvider to load Collections into ApiPlatform
+ * DataProvider to load Actions into ApiPlatform
  * 
  * @package Fantestic/ApiPlatform
  * @author Gerald Baumeister <gerald@fantestic.io>
@@ -19,13 +20,13 @@ use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 final class CollectionDataProvider implements ContextAwareCollectionDataProviderInterface, RestrictedDataProviderInterface
 {
     public function __construct(
-        private CollectionRepository $collectionRepository
+        private ActionRepository $actionRepository
     ) {}
 
 
     public function supports(string $resourceClass, ?string $operationName = null, array $context = []): bool
     {
-        return Collection::class === $resourceClass;
+        return Action::class === $resourceClass;
     }
 
 
@@ -34,10 +35,10 @@ final class CollectionDataProvider implements ContextAwareCollectionDataProvider
      * @param string $resourceClass 
      * @param string|null $operationName 
      * @param array $context 
-     * @return iterable|Collection[]
+     * @return iterable|Action[]
      */
     public function getCollection(string $resourceClass, string $operationName = null, array $context = []): iterable
     {
-        return $this->collectionRepository->findAll();
+        return $this->actionRepository->findAll();
     }
 }

@@ -3,12 +3,8 @@
 declare(strict_types = 1);
 namespace App\CestManager\Scenario\Entity;
 
-use ApiPlatform\Core\Annotation\ApiProperty;
-use ApiPlatform\Core\Annotation\ApiResource;
-use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\CestManager\Collection\Entity\Collection;
 use App\CestManager\Scenario\ValueObject\Id;
-use App\CestManager\Collection\ValueObject\Id as CollectionId;
 
 /**
  * 
@@ -19,6 +15,7 @@ use App\CestManager\Collection\ValueObject\Id as CollectionId;
  */
 final class Scenario
 {
+    const ID_SEPARATOR = '::';
     private Id $id;
 
     /**

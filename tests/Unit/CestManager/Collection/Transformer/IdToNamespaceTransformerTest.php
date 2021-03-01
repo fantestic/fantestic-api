@@ -17,7 +17,7 @@ final class IdToNamespaceTransformerTest extends KernelTestCase
 {
     public function testEncodesValue() :void
     {
-        $id = Id::fromReadable('SubNs/ClassName');
+        $id = Id::fromString('SubNs-ClassName');
         $t = new IdToNamespaceTransformer('NsPrefix\\', 'Suffix');
         $this->assertEquals('NsPrefix\SubNs\ClassNameSuffix', $t->transform($id));
     }

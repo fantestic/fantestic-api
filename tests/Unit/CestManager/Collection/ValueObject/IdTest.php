@@ -17,9 +17,9 @@ final class IdTest extends KernelTestCase
 {
     public function testFromStringDoesNotChangeFromPath() :void
     {
-        $path = 'Demo/Value';
-        $id = Id::fromString($path);
-        $this->assertEquals($path, $id->toReadable());
+        $string = 'Demo-Value';
+        $id = Id::fromString($string);
+        $this->assertEquals($string, $id->toString());
     }
 
 

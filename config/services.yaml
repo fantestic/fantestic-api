@@ -41,7 +41,12 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
             - '../src/Tests/'
-            - '../src/CestManager/Entity/'
+            - '../src/CestManager/Action/Entity/'
+            - '../src/CestManager/Scenario/Entity/'
+            - '../src/CestManager/Collection/Entity/'
+            - '../src/CestManager/Action/ValueObject/'
+            - '../src/CestManager/Scenario/ValueObject/'
+            - '../src/CestManager/Collection/ValueObject/'
     
     # TODO load from configuration
     App\CestManager\Collection\Transformer\IdToPathTransformer:
@@ -57,7 +62,9 @@ services:
     App\CestManager\Collection\Transformer\TransformerToIdTransformer:
             arguments:
                 - 'Cests\'
-    
+    App\CestManager\Action\ActionProvider\ActionProviderCollection:
+        arguments:
+            - !tagged_iterator fantestic.action_provider
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class

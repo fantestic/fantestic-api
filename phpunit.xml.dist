@@ -20,7 +20,7 @@
   </php>
   <testsuites>
     <testsuite name="Fantestic Test Suite">
-      <directory>tests/Unit</directory>
+      <directory>tests/unit</directory>
     </testsuite>
   </testsuites>
 </phpunit>

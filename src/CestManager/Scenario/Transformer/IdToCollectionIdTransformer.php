@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace App\CestManager\Scenario\Transformer;
 
 use App\CestManager\Contract\TransformerInterface;
+use App\CestManager\Scenario\Entity\Scenario;
 use App\CestManager\Scenario\ValueObject\Id as ScenarioId;
 use App\CestManager\Collection\ValueObject\Id as CollectionId;
 use InvalidArgumentException;
@@ -29,7 +30,7 @@ final class IdToCollectionIdTransformer implements TransformerInterface
                 sprintf('Can only transform "%s", "%s" received.', Id::class, gettype($scenarioId))
             );
         }
-        $pieces = explode('::', $scenarioId->toReadable());
-        return CollectionId::fromReadable($pieces[0]);
+        $pieces = explode(Scenario::ID_SEPARATOR, $scenarioId->toString());
+        return CollectionId::fromString($pieces[0]);
     }
 }

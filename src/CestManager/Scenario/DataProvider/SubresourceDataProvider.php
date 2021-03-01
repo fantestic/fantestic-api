@@ -3,7 +3,6 @@
 declare(strict_types = 1);
 namespace App\CestManager\Scenario\DataProvider;
 
-use App\CestManager\Scenario\Entity;
 use App\CestManager\Collection\CollectionRepository;
 use App\CestManager\Scenario\Transformer\IdToCollectionIdTransformer;
 use App\CestManager\Collection\ValueObject\Id as CollectionId;
@@ -11,13 +10,10 @@ use App\CestManager\Exception\ValueObject\InvalidIdentifierStringException;
 use App\CestManager\Scenario\ValueObject\Id as ScenarioId;
 use App\CestManager\Collection\Transformer\IdToNamespaceTransformer;
 use App\CestManager\Scenario\Entity\Scenario;
-use ApiPlatform\Core\DataProvider\ContextAwareCollectionDataProviderInterface;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 use ApiPlatform\Core\DataProvider\SubresourceDataProviderInterface;
 use Fantestic\CestManager\CestReader\ReflectionCestReader;
 use Fantestic\CestManager\Exception\ClassNotFoundException;
-use App\CestManager\Collection\Entity\Collection;
-use Symfony\Component\VarDumper\VarDumper;
 
 /**
  * DataProvider to load Collections into ApiPlatform
@@ -69,7 +65,7 @@ final class SubresourceDataProvider implements RestrictedDataProviderInterface, 
             foreach ($names as $name) {
                 // dependency how to build id is hidden here
                 yield new Scenario(ScenarioId::fromString(
-                    $collectionId->toString().'::'.$name
+                    $collectionId->toString().Scenario::ID_SEPARATOR.$name
                 ));
             }
         } catch (InvalidIdentifierStringException $e) {
