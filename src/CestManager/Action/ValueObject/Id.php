@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace App\CestManager\Action\ValueObject;
 
 use App\CestManager\Exception\ValueObject\InvalidIdentifierStringException;
-
 /**
  * Identifier for an Action
  * 

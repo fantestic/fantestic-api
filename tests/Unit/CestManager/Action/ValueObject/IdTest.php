@@ -3,7 +3,7 @@
 declare(strict_types = 1);
 namespace App\Tests\Unit\CestManager\Action\ValueObject;
 
-use ApiPlatform\Core\Exception\InvalidIdentifierException;
+
 use App\CestManager\Action\ValueObject\Id;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use App\CestManager\Exception\ValueObject\InvalidIdentifierStringException;
@@ -18,7 +18,7 @@ final class IdTest extends KernelTestCase
 {
     public function testThrowsInvalidIdentifierString() :void
     {
-        $this->expectException(InvalidIdentifierException::class);
+        $this->expectException(InvalidIdentifierStringException::class);
         Id::fromString('A invalid identifier');
     }
 
@@ -26,6 +26,6 @@ final class IdTest extends KernelTestCase
     {
         $idString = 'aValidActionName';
         $id = Id::fromString($idString);
-        $this->assertSame($idString, $id);
+        $this->assertSame($idString, $id->toString());
     }
 }
