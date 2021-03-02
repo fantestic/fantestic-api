@@ -27,6 +27,9 @@ services:
     App\CestManager\Collection\Normalizer\Normalizer:
         tags:
             - { name: api_platform.identifier.normalizer }
+    App\CestManager\Action\Normalizer\IdNormalizer:
+        tags:
+            - { name: api_platform.identifier.normalizer }
 #    App\CestManager\Normalizer\Scenario\IdNormalizer:
 #        tags:
 #            - { name: api_platform.identifier.denormalizer }
