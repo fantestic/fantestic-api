@@ -5,6 +5,7 @@ namespace App\CestManager\Action\Entity;
 
 use App\CestManager\Action\ValueObject\Id;
 use App\CestManager\Action\ValueObject\Parameter;
+use Fantestic\CestManager\Contract\ActionInterface;
 
 /**
  * 
@@ -13,7 +14,7 @@ use App\CestManager\Action\ValueObject\Parameter;
  * @author Gerald Baumeister <gerald@fantestic.io>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  */
-final class Action
+final class Action implements ActionInterface
 {
     private Id $id;
 
@@ -30,6 +31,11 @@ final class Action
         $this->id = $id;
         $this->readable = $readable;
         $this->parameters = $parameters;
+    }
+
+    public function getMethodName(): string 
+    {
+        return $this->id->toString();
     }
 
 

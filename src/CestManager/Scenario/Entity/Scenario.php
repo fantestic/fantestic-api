@@ -5,6 +5,8 @@ namespace App\CestManager\Scenario\Entity;
 
 use App\CestManager\Collection\Entity\Collection;
 use App\CestManager\Scenario\ValueObject\Id;
+use App\CestManager\Scenario\ValueObject\Step;
+use Fantestic\CestManager\Contract\ScenarioInterface;
 
 /**
  * 
@@ -13,9 +15,8 @@ use App\CestManager\Scenario\ValueObject\Id;
  * @author Gerald Baumeister <gerald@fantestic.io>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  */
-final class Scenario
+final class Scenario implements ScenarioInterface
 {
-    const ID_SEPARATOR = '::';
     private Id $id;
 
     /**
@@ -23,10 +24,21 @@ final class Scenario
      */
     private ?Collection $collection = null;
 
+    /**
+     * 
+     * @var Step[]
+     */
+    private array $steps;
+
 
     public function __construct(Id $id)
     {
         $this->id = $id;
+    }
+
+    public function getMethodName(): string
+    {
+        return $this->id->getMethodName();
     }
 
 
@@ -39,5 +51,15 @@ final class Scenario
     public function getCollection() :?Collection
     {
         return $this->collection;
+    }
+
+
+    /**
+     * 
+     * @return iterable|Step[]
+     */
+    public function getSteps() :iterable
+    {
+        return $this->steps;
     }
 }

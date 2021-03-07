@@ -14,6 +14,7 @@ use App\CestManager\Exception\ValueObject\InvalidIdentifierStringException;
  */
 final class Id
 {
+    const ID_SEPARATOR = '::';
     private string $id;
 
 
@@ -27,10 +28,16 @@ final class Id
     {
         if (1 !== preg_match('/^[a-zA-Z0-9_-]+::[a-z][a-zA-Z0-9_]*$/', $readable)) {
             throw new InvalidIdentifierStringException(
-                sprintf('"%s" is not considered a valid Readable Scenario Id!', $readable)
+                sprintf('"%s" is not considered a valid Scenario Id!', $readable)
             );
         }
         return new self($readable);
+    }
+
+
+    public function getMethodName() :string
+    {
+        return explode(self::ID_SEPARATOR, $this->id)[1];
     }
 
 

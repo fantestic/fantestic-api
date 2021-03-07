@@ -5,7 +5,7 @@ namespace App\CestManager\Collection\Entity;
 
 use App\CestManager\Scenario\Entity\Scenario;
 use App\CestManager\Collection\ValueObject\Id;
-use App\CestManager\Scenario\ValueObject\Id as ScenarioId;
+use Fantestic\CestManager\Contract\CollectionInterface;
 
 /**
  * 

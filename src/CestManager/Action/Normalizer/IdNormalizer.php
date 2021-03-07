@@ -24,10 +24,12 @@ class IdNormalizer implements ContextAwareNormalizerInterface, NormalizerAwareIn
 {
     use NormalizerAwareTrait;
 
+
     public function supportsNormalization($data, ?string $format = null, array $context = [])
     {
         return $data instanceof Id;
     }
+
 
     /**
      * 

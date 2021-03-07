@@ -30,7 +30,7 @@ final class IdToCollectionIdTransformer implements TransformerInterface
                 sprintf('Can only transform "%s", "%s" received.', Id::class, gettype($scenarioId))
             );
         }
-        $pieces = explode(Scenario::ID_SEPARATOR, $scenarioId->toString());
+        $pieces = explode(ScenarioId::ID_SEPARATOR, $scenarioId->toString());
         return CollectionId::fromString($pieces[0]);
     }
 }

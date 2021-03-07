@@ -24,4 +24,12 @@ final class IdToCollectionIdTransformerTest extends KernelTestCase
         $t = new IdToCollectionIdTransformer();
         $this->assertEquals($collectionId, $t->transform($scenarioId));
     }
+
+
+    public function testGetMethodNameReturnsTheMethod() :void
+    {
+        $methodName = 'methodName';
+        $id = ScenarioId::fromString("Dir-File::{$methodName}");
+        $this->assertEquals($methodName, $id->getMethodName());
+    }
 }
