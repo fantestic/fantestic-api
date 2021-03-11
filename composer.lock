@@ -1558,12 +1558,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/fantestic/cestmanager.git",
-                "reference": "909dce9fc1730d212d79c7e9bb23869e568f64ba"
+                "reference": "bf3bfda6d6789c4d1d8b036828e6f9ed78f0cab2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/fantestic/cestmanager/zipball/909dce9fc1730d212d79c7e9bb23869e568f64ba",
-                "reference": "909dce9fc1730d212d79c7e9bb23869e568f64ba",
+                "url": "https://api.github.com/repos/fantestic/cestmanager/zipball/bf3bfda6d6789c4d1d8b036828e6f9ed78f0cab2",
+                "reference": "bf3bfda6d6789c4d1d8b036828e6f9ed78f0cab2",
                 "shasum": ""
             },
             "require": {
@@ -1602,7 +1602,7 @@
                 "source": "https://github.com/fantestic/cestmanager/tree/dev",
                 "issues": "https://github.com/fantestic/cestmanager/issues"
             },
-            "time": "2021-03-07T22:28:49+00:00"
+            "time": "2021-03-08T02:04:19+00:00"
         },
         {
             "name": "fig/link-util",

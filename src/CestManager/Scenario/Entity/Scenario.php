@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace App\CestManager\Scenario\Entity;
 
 use App\CestManager\Collection\Entity\Collection;
+use App\CestManager\Collection\ValueObject\Id as CollectionId;
 use App\CestManager\Scenario\ValueObject\Id;
 use App\CestManager\Scenario\ValueObject\Step;
 use Fantestic\CestManager\Contract\ScenarioInterface;
@@ -28,7 +29,7 @@ final class Scenario implements ScenarioInterface
      * 
      * @var Step[]
      */
-    private array $steps;
+    private array $steps = [];
 
 
     public function __construct(Id $id)
@@ -45,6 +46,13 @@ final class Scenario implements ScenarioInterface
     public function getId() :Id
     {
         return $this->id;
+    }
+
+
+    public function setId(Id $id) :self
+    {
+        $this->id = $id;
+        return $this;
     }
 
 
