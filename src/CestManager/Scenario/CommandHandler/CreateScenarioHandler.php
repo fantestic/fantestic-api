@@ -4,12 +4,11 @@ declare(strict_types = 1);
 namespace App\CestManager\Scenario\CommandHandler;
 
 use App\CestManager\Collection\Adapter\FantesticCollectionFactory;
-use Fantestic\CestManager\CestManipulator;
-use App\CestManager\Collection\Command\CreateCollection;
 use App\CestManager\Collection\Entity\Collection;
 use App\CestManager\Scenario\Command\CreateScenario;
 use App\CestManager\Scenario\Transformer\IdToCollectionIdTransformer;
 use Exception;
+use Fantestic\CestManager\CestWriter;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 /**
@@ -22,7 +21,7 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 final class CreateScenarioHandler implements MessageHandlerInterface
 {
     public function __construct(
-        private CestManipulator $cestManipulator,
+        private CestWriter $cestWriter,
         private IdToCollectionIdTransformer $idToCollectionIdTransformer,
         private FantesticCollectionFactory $fantesticCollectionFactory
     ) { }
@@ -39,7 +38,7 @@ final class CreateScenarioHandler implements MessageHandlerInterface
             $collectionAdapter = $this->fantesticCollectionFactory->make(
                 $collectionEntity
             );
-            $this->cestManipulator->createScenario(
+            $this->cestWriter->createScenario(
                 $collectionAdapter,
                 $createScenario->getScenario()
             );

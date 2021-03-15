@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace App\CestManager\Collection\CommandHandler;
 
 use App\CestManager\Collection\Adapter\FantesticCollectionFactory;
-use Fantestic\CestManager\CestManipulator;
+use Fantestic\CestManager\CestWriter;
 use App\CestManager\Collection\Command\CreateCollection;
 use Exception;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
@@ -19,7 +19,7 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 final class CreateCollectionHandler implements MessageHandlerInterface
 {
     public function __construct(
-        private CestManipulator $cestManipulator,
+        private CestWriter $cestWriter,
         private FantesticCollectionFactory $fantesticCollectionFactory
     ) { }
 
@@ -30,7 +30,7 @@ final class CreateCollectionHandler implements MessageHandlerInterface
             $collection = $this->fantesticCollectionFactory->make(
                 $createCollection->getCollection()
             );
-            $this->cestManipulator->createCest($collection);
+            $this->cestWriter->createCest($collection);
         } catch (Exception $e) {
             throw $e;
         }

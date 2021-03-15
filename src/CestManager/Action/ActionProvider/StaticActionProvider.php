@@ -6,6 +6,7 @@ namespace App\CestManager\Action\ActionProvider;
 use App\CestManager\Contract\ActionProviderInterface;
 use App\CestManager\Action\Entity\Action;
 use App\CestManager\Action\ValueObject\Id;
+use App\CestManager\Action\ValueObject\Parameter;
 
 /**
  * Generates a list of all ActionProviders using the Symfony ContainerBuilder.
@@ -45,7 +46,7 @@ class StaticActionProvider implements ActionProviderInterface
             ],
             [
                 'selectOption',
-                'I select option $option from dropdwon $dropdown',
+                'I select option $option from dropdown $dropdown',
                 [
                     ['name' => '$option', 'providers' => []],
                     ['name' => '$dropdown', 'providers' => []],
@@ -60,10 +61,14 @@ class StaticActionProvider implements ActionProviderInterface
 
     private function createAction(array $conf) :Action
     {
+        $parameters = [];
+        foreach ($conf[2] as $pos => $parameter) {
+            $parameters[] = new Parameter($parameter['name'], $pos);
+        }
         return new Action(
             Id::fromString($conf[0]),
             $conf[1],
-            $conf[2]
+            $parameters
         );
     }
 }

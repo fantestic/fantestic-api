@@ -36,4 +36,11 @@ class ActionRepository
         }
         return $actions;
     }
+
+
+    public function find(string $identifier) :?Action
+    {
+        $actions = iterator_to_array($this->findAll());
+        return array_key_exists($identifier, $actions)?$actions[$identifier]:null;
+    }
 }

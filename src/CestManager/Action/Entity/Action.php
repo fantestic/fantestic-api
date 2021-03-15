@@ -6,7 +6,7 @@ namespace App\CestManager\Action\Entity;
 use App\CestManager\Action\ValueObject\Id;
 use App\CestManager\Action\ValueObject\Parameter;
 use Fantestic\CestManager\Contract\ActionInterface;
-
+use Fantestic\CestManager\Dto\Action as ActionDto;
 /**
  * 
  * 
@@ -17,21 +17,29 @@ use Fantestic\CestManager\Contract\ActionInterface;
 final class Action implements ActionInterface
 {
     private Id $id;
-
     /**
      * @var Parameter[]
      */
-    private array $parameters;
-
+    private iterable $parameters;
     private string $readable;
 
-
-    public function __construct(Id $id, string $readable, array $parameters)
+    public function __construct(Id $id, string $readable, iterable $parameters)
     {
         $this->id = $id;
         $this->readable = $readable;
         $this->parameters = $parameters;
     }
+
+
+    public static function fromDto(ActionDto $actionDto) :Action
+    {
+        return new self(
+            Id::fromString($actionDto->getMethodName()),
+            $actionDto->getMethodName(),
+            $actionDto->getParameters()
+        );
+    }
+
 
     public function getMethodName(): string 
     {

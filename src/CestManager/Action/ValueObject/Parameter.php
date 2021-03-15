@@ -13,10 +13,20 @@ namespace App\CestManager\Action\ValueObject;
  */
 final class Parameter
 {
-    private string $name;
+    public function __construct(
+        private string $name,
+        private int $position
+    ) { }
+
 
     public function getName() :string
     {
         return $this->name;
+    }
+
+
+    public function getPosition() :int
+    {
+        return $this->position;
     }
 }

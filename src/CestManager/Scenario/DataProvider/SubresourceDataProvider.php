@@ -12,8 +12,10 @@ use App\CestManager\Collection\Transformer\IdToNamespaceTransformer;
 use App\CestManager\Scenario\Entity\Scenario;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 use ApiPlatform\Core\DataProvider\SubresourceDataProviderInterface;
-use Fantestic\CestManager\CestReader\ReflectionCestReader;
+use Fantestic\CestManager\CestReader;
 use Fantestic\CestManager\Exception\ClassNotFoundException;
+use LogicException;
+use Fantestic\CestManager\Exception\UnprocessableScenarioException;
 
 /**
  * DataProvider to load Collections into ApiPlatform
@@ -28,7 +30,7 @@ final class SubresourceDataProvider implements RestrictedDataProviderInterface, 
     public function __construct(
         private IdToCollectionIdTransformer $idToCollectionIdTransformer,
         private CollectionRepository $collectionRepository,
-        private ReflectionCestReader $cestReader,
+        private CestReader $cestReader,
         private IdToNamespaceTransformer $idToNamespaceTransformer
     ) { }
 
@@ -47,34 +49,23 @@ final class SubresourceDataProvider implements RestrictedDataProviderInterface, 
      * @param string|null $operationName 
      * @return iterable|Scenario[]
      * @throws ClassNotFoundException
+     * @throws LogicException
+     * @throws UnprocessableScenarioException
      */
     public function getSubresource(string $resourceClass, array $identifiers, array $context, ?string $operationName = null) :?iterable
     {
         $collectionId = CollectionId::fromString($identifiers['id']['id']);
         try {
-            $collectionId = CollectionId::fromString($identifiers['id']['id']);
-            // try and load Collection prior to ensure we have a valid Collection
-            $collection = $this->collectionRepository->find($collectionId);
-            if (is_null($collection)) {
-                return null;
-            }
-            $names = $this->cestReader->getScenarioNames(
+            $collectionDto = $this->cestReader->getCollection(
                 $this->idToNamespaceTransformer->transform($collectionId)
             );
-            
-            foreach ($names as $name) {
-                // dependency how to build id is hidden here
-                yield new Scenario(ScenarioId::fromString(
-                    $collectionId->toString().ScenarioId::ID_SEPARATOR.$name
-                ));
+            foreach ($collectionDto->getScenarios() as $scenario) {
+                yield Scenario::fromDto($scenario, $collectionId);
             }
         } catch (InvalidIdentifierStringException $e) {
             return null;
-        } catch (ClassNotFoundException $e) {
+        } catch (ClassNotFoundException | LogicException | UnprocessableScenarioException $e) {
             throw $e;
         }
     }
 }
-
-
-

@@ -5,6 +5,7 @@ namespace App\CestManager\Scenario\ValueObject;
 
 use App\CestManager\Action\Entity\Action;
 use Fantestic\CestManager\Contract\StepInterface;
+use Fantestic\CestManager\Dto\Step as StepDto;
 
 /**
  * A single step inside a scenario. Composed of an Action and a position
@@ -15,11 +16,25 @@ use Fantestic\CestManager\Contract\StepInterface;
  */
 final class Step implements StepInterface
 {
-    private int $position;
+    public function __construct(
+        private int $position,
+        private Action $action,
+        private iterable $arguments
+    ) { }
 
-    private Action $action;
-
-    private array $arguments;
+    public static function fromDto(StepDto $stepDto) :Step
+    {
+        $arguments = [];
+        foreach ($stepDto->getArguments() as $pos => $argument) {
+            $arguments[] = Argument::fromDto($argument, $pos);
+        }
+        $instance = new self(
+            $stepDto->getPosition(),
+            Action::fromDto($stepDto->getAction()),
+            $arguments
+        );
+        return $instance;
+    }
 
     public function getArguments(): iterable
     {
@@ -30,7 +45,6 @@ final class Step implements StepInterface
     {
         return $this->position;
     }
-
 
     public function getAction() :Action
     {

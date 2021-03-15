@@ -8,6 +8,7 @@ use App\CestManager\Collection\ValueObject\Id as CollectionId;
 use App\CestManager\Scenario\ValueObject\Id;
 use App\CestManager\Scenario\ValueObject\Step;
 use Fantestic\CestManager\Contract\ScenarioInterface;
+use Fantestic\CestManager\Dto\Scenario as ScenarioDto;
 
 /**
  * 
@@ -26,7 +27,6 @@ final class Scenario implements ScenarioInterface
     private ?Collection $collection = null;
 
     /**
-     * 
      * @var Step[]
      */
     private array $steps = [];
@@ -37,11 +37,22 @@ final class Scenario implements ScenarioInterface
         $this->id = $id;
     }
 
+    public static function fromDto(ScenarioDto $dto, CollectionId $collectionId) :Scenario
+    {
+        $id = Id::fromString(
+            $collectionId->toString() . Id::ID_SEPARATOR . $dto->getMethodName()
+        );
+        $instance = new self($id);
+        foreach ($dto->getSteps() as $step) {
+            $instance->addStep(Step::fromDto($step));
+        }
+        return $instance;
+    }
+
     public function getMethodName(): string
     {
         return $this->id->getMethodName();
     }
-
 
     public function getId() :Id
     {
@@ -55,12 +66,10 @@ final class Scenario implements ScenarioInterface
         return $this;
     }
 
-
     public function getCollection() :?Collection
     {
         return $this->collection;
     }
-
 
     /**
      * 
@@ -69,5 +78,11 @@ final class Scenario implements ScenarioInterface
     public function getSteps() :iterable
     {
         return $this->steps;
+    }
+
+    public function addStep(Step $step) :self
+    {
+        $this->steps[] = $step;
+        return $this;
     }
 }
