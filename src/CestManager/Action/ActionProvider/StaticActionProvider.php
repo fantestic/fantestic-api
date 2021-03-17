@@ -52,6 +52,26 @@ class StaticActionProvider implements ActionProviderInterface
                     ['name' => '$dropdown', 'providers' => []],
                 ]
             ],
+            [
+                'amOnUrl',
+                'I am on $url',
+                [['name' => '$url', 'providers' => []]],
+            ],
+            [
+                'fillField',
+                'I fill field $field with value $value',
+                [
+                    ['name' => '$field', 'providers' => []],
+                    ['name' => '$value', 'providers' => []],
+                ]
+            ],
+            [
+                'click',
+                'I click on $selector',
+                [
+                    ['name' => '$selector', 'providers' => []]
+                ]
+            ],
         ];
         foreach ($actions as $action) {
             yield $this->createAction($action);

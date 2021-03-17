@@ -17,7 +17,7 @@ services:
         autowire: true
     Fantestic\CestManager\Finder:
         arguments:
-            - '%kernel.project_dir%/cests/src'
+            - '%kernel.project_dir%/cests/src/Suites/Acceptance'
 
 
     # help api_platform
@@ -63,11 +63,14 @@ services:
                 - 'Cest.php'
     App\CestManager\Collection\Transformer\IdToNamespaceTransformer:
             arguments:
-                - 'Cests\'
+                - 'Cests\Suites\Acceptance\'
                 - 'Cest'
+    App\CestManager\Collection\Transformer\NamespaceToIdTransformer:
+            arguments:
+                - 'Cests\Suites\Acceptance\'
     App\CestManager\Collection\Transformer\TransformerToIdTransformer:
             arguments:
-                - 'Cests\'
+                - 'Cests\Suites\Acceptance\'
     App\CestManager\Action\ActionProvider\ActionProviderCollection:
         arguments:
             - !tagged_iterator fantestic.action_provider

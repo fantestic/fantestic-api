@@ -9,6 +9,9 @@
         "ext-iconv": "*",
         "api-platform/core": "^2.6",
         "codeception/codeception": "^4.1",
+        "codeception/module-asserts": "^1.0.0",
+        "codeception/module-phpbrowser": "^1.0.0",
+        "codeception/module-webdriver": "^1.2",
         "composer/package-versions-deprecated": "1.11.99.1",
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-bundle": "^2.2",
@@ -83,7 +86,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url":  "https://github.com/fantestic/cestmanager.git"
+            "url": "https://github.com/fantestic/cestmanager.git"
         }
     ]
 }

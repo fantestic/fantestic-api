@@ -3,14 +3,18 @@
 declare(strict_types = 1);
 namespace App\CestManager\Scenario;
 
-use App\CestManager\Collection\Entity\Collection;
+use App\CestManager\Collection\Adapter\FantesticCollection;
+use App\CestManager\Collection\Adapter\FantesticCollectionFactory;
+use App\CestManager\Collection\CollectionRepository;
 use App\CestManager\Scenario\Entity\Scenario;
-use App\CestManager\Collection\ValueObject\Id as CollectionId;
 use App\CestManager\Scenario\ValueObject\Id as ScenarioId;
-use App\CestManager\Collection\Transformer\IdToNamespaceTransformer;
-use App\CestManager\Collection\Transformer\NamespaceToIdTransformer;
-use Fantestic\CestManager\CestReader\ReflectionCestReader;
+use App\CestManager\Exception\ValueObject\InvalidIdentifierStringException;
+use App\CestManager\Scenario\Transformer\ScenarioIdToCollectionIdTransformer;
+use App\Cestmanager\Scenario\Transformer\IdToCollectionIdTransformer;
+use App\Cestmanager\Collection\Transformer\CollectionToDtoTransformer;
+use Fantestic\CestManager\CestReader;
 use Fantestic\CestManager\Exception\ClassNotFoundException;
+use InvalidArgumentException;
 
 /**
  * 
@@ -22,25 +26,37 @@ use Fantestic\CestManager\Exception\ClassNotFoundException;
 class ScenarioRepository
 {
     public function __construct(
-        private ReflectionCestReader $cestReader,
-        private IdToNamespaceTransformer $idToNamespaceTransformer,
-        private NamespaceToIdTransformer $namespaceToIdTransformer
+        private CestReader $cestReader,
+        private CollectionRepository $collectionRepository,
+        private ScenarioIdToCollectionIdTransformer $scenarioIdToCollectionIdTransformer,
+        private FantesticCollectionFactory $fantesticCollectionFactory
     ) {}
 
 
     /**
-     * Returns a list of all Scenarios inside a Collection
      * 
-     * @return iterable|Scenario[] 
+     * @param ScenarioId $id 
+     * @return null|Scenario
+     * @throws InvalidArgumentException
+     * @throws InvalidIdentifierStringException
      */
-    public function findAllForCollection(CollectionId $id) :?iterable
+    public function find(ScenarioId $id) :?Scenario
     {
-        $classname = $this->idToNamespaceTransformer->transform($id);
         try {
-            $scenarios = [];
-            foreach ($this->cestReader->getScenarioNames($classname) as $scenarioName) {
-                $scenarios[] = new Scenario(new ScenarioId('@TODO'));
+            $collection = $this->collectionRepository->find(
+                $this->scenarioIdToCollectionIdTransformer->transform($id)
+            );
+            if (is_null($collection)) {
+                return null;
             }
+            $scenarioDto = $this->cestReader->getScenario(
+                $this->fantesticCollectionFactory->make($collection),
+                new Scenario($id)
+            );
+            if (is_null($scenarioDto)) {
+                return null;
+            }
+            return Scenario::fromDto($scenarioDto, $collection->getId());
         } catch (ClassNotFoundException $e) {
             return null;
         }

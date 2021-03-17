@@ -37,6 +37,7 @@ final class Scenario implements ScenarioInterface
         $this->id = $id;
     }
 
+
     public static function fromDto(ScenarioDto $dto, CollectionId $collectionId) :Scenario
     {
         $id = Id::fromString(
@@ -83,6 +84,15 @@ final class Scenario implements ScenarioInterface
     public function addStep(Step $step) :self
     {
         $this->steps[] = $step;
+        return $this;
+    }
+
+    public function setSteps(array $steps) :self
+    {
+        $this->steps = [];
+        foreach ($steps as $step) {
+            $this->addStep($step);
+        }
         return $this;
     }
 }

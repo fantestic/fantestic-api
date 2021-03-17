@@ -1,17 +1,18 @@
 <?php
 
 declare(strict_types = 1);
-namespace App\CestManager\Scenario\DataProvider;
+namespace App\CestManager\Action\DataProvider;
 
-use App\CestManager\Scenario\Entity\Scenario;
+use App\CestManager\Action\Entity\Action;
+use App\CestManager\Action\ActionRepository;
+use App\CestManager\Action\ValueObject\Id;
 use ApiPlatform\Core\DataProvider\ItemDataProviderInterface;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
-use App\CestManager\Scenario\ScenarioRepository;
-use App\CestManager\Scenario\ValueObject\Id;
-use Exception;
+
+
 
 /**
- * DataProvider to load Scenarios into ApiPlatform
+ * DataProvider to load Actions
  * 
  * @package Fantestic/ApiPlatform
  * @author Gerald Baumeister <gerald@fantestic.io>
@@ -21,7 +22,7 @@ use Exception;
 final class ItemDataProvider implements ItemDataProviderInterface, RestrictedDataProviderInterface
 {
     public function __construct(
-        private ScenarioRepository $scenarioRepository
+        private ActionRepository $actionRepository
     ) { }
 
 
@@ -30,15 +31,15 @@ final class ItemDataProvider implements ItemDataProviderInterface, RestrictedDat
      */
     public function supports(string $resourceClass, ?string $operationName = null, array $context = []): bool
     {
-        return Scenario::class === $resourceClass;
+        return Action::class === $resourceClass;
     }
 
 
     /**
      * @inheritdoc
      */
-    public function getItem(string $resourceClass, $id, ?string $operationName = null, array $context = []) :?Scenario
+    public function getItem(string $resourceClass, $id, ?string $operationName = null, array $context = []) :?Action
     {
-        return $this->scenarioRepository->find(Id::fromString($id));
+        return $this->actionRepository->find($id);
     }
 }

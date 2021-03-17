@@ -51,4 +51,10 @@ final class Id
     {
         return $this->toString();
     }
+
+
+    public function equals(Id $id) :bool
+    {
+        return ($id->toString() === $this->toString());
+    }
 }

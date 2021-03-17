@@ -62,4 +62,10 @@ final class FantesticCollection implements CollectionInterface
     {
         return $this->idToPathTransformer->transform($this->collection->getId());
     }
+
+
+    public function getFullyQualifiedClassname() :string
+    {
+        return $this->getNamespace() . '\\' . $this->getClassname();
+    }
 }
