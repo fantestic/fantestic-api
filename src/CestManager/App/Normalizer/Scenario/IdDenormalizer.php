@@ -17,27 +17,14 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
  */
 final class IdDenormalizer implements DenormalizerInterface
 {
-
     public function denormalize($data, string $type, ?string $format = null, array $context = [])
     {
         return ScenarioId::fromString($data);
     }
 
+
     public function supportsDenormalization($data, string $type, ?string $format = null)
     {
         return is_a($type, ScenarioId::class, true);
     }
-
-    /*
-    public function normalize($object, ?string $format = null, array $context = [])
-    {
-        return $object->toString();
-    }
-
-    public function supportsNormalization($data, ?string $format = null)
-    {
-        return ($data instanceof Id);
-        
-    }
-    */
 }

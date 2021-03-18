@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types = 1);
-namespace App\CestManager\Contract;
+namespace App\CestManager\Infra\Contract;
 
 use App\CestManager\Domain\Entity\Action;
 

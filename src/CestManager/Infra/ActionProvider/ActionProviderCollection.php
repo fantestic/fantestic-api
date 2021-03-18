@@ -3,7 +3,7 @@
 declare(strict_types = 1);
 namespace App\CestManager\Infra\ActionProvider;
 
-use App\CestManager\Contract\ActionProviderInterface;
+use App\CestManager\Infra\Contract\ActionProviderInterface;
 use IteratorAggregate;
 
 /**
