@@ -21,19 +21,19 @@ services:
 
 
     # help api_platform
-    App\CestManager\Collection\Normalizer\IdDenormalizer:
+    App\CestManager\App\Normalizer\Collection\IdDenormalizer:
         tags:
             - { name: api_platform.identifier.denormalizer }
-    App\CestManager\Collection\Normalizer\Normalizer:
+    App\CestManager\App\Normalizer\Collection\IdNormalizer:
         tags:
             - { name: api_platform.identifier.normalizer }
-    App\CestManager\Action\Normalizer\IdNormalizer:
+    App\CestManager\App\Normalizer\Action\IdNormalizer:
         tags:
             - { name: api_platform.identifier.normalizer }
-    App\CestManager\Scenario\Normalizer\IdNormalizer:
+    App\CestManager\App\Normalizer\Scenario\IdNormalizer:
         tags:
             - { name: api_platform.identifier.normalizer }
-    App\CestManager\Scenario\Normalizer\IdDenormalizer:
+    App\CestManager\App\Normalizer\Scenario\IdDenormalizer:
         tags:
             - { name: api_platform.identifier.denormalizer }
 
@@ -44,34 +44,17 @@ services:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
-            - '../src/Entity/'
             - '../src/Kernel.php'
             - '../src/Tests/'
-            - '../src/CestManager/Action/Entity/'
-            - '../src/CestManager/Scenario/Entity/'
-            - '../src/CestManager/Collection/Entity/'
-            - '../src/CestManager/Action/ValueObject/'
-            - '../src/CestManager/Scenario/ValueObject/'
-            - '../src/CestManager/Collection/ValueObject/'
+            - '../src/CestManager/Domain/Entity/'
+            - '../src/CestManager/Domain/ValueObject/'
     
     # TODO load from configuration
-    App\CestManager\Collection\Transformer\IdToPathTransformer:
-            arguments:
-                - 'Cest.php'
-    App\CestManager\Collection\Transformer\PathToIdTransformer:
-            arguments:
-                - 'Cest.php'
-    App\CestManager\Collection\Transformer\IdToNamespaceTransformer:
-            arguments:
-                - 'Cests\Suites\Acceptance\'
-                - 'Cest'
-    App\CestManager\Collection\Transformer\NamespaceToIdTransformer:
-            arguments:
-                - 'Cests\Suites\Acceptance\'
-    App\CestManager\Collection\Transformer\TransformerToIdTransformer:
-            arguments:
-                - 'Cests\Suites\Acceptance\'
-    App\CestManager\Action\ActionProvider\ActionProviderCollection:
+    App\CestManager\Infra\Factory\CollectionIdFactory:
+        arguments:
+            - 'Cests\Suites\Acceptance\'
+            - 'Cest'
+    App\CestManager\Infra\ActionProvider\ActionProviderCollection:
         arguments:
             - !tagged_iterator fantestic.action_provider
 

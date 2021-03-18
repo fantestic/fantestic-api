@@ -3,7 +3,7 @@
 declare(strict_types = 1);
 namespace App\CestManager\Contract;
 
-use App\CestManager\Action\Entity\Action;
+use App\CestManager\Domain\Entity\Action;
 
 /**
  * ActionProviders give access to available Actions inside fantestic.

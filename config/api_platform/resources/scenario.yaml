@@ -1,4 +1,4 @@
-App\CestManager\Scenario\Entity\Scenario:
+App\CestManager\Domain\Entity\Scenario:
   description: 'A collection of Scenarios'
 #  id:
 #    generationStrategy: none

@@ -1,4 +1,4 @@
-App\CestManager\Collection\Entity\Collection:
+App\CestManager\Domain\Entity\Collection:
   description: 'A collection of Scenarios'
   
   id:
@@ -11,10 +11,10 @@ App\CestManager\Collection\Entity\Collection:
       writeable: true
     scenarios:
       subresource:
-        resourceClass: 'App\CestManager\Scenario\Entity\Scenario'
+        resourceClass: 'App\CestManager\Domain\Entity\Scenario'
         collection: true
         identifiers:
-          - ['id', 'App\CestManager\Collection\ValueObject\Id']
+          - ['id', 'App\CestManager\Domain\ValueObject\Collection\Id']
       
   collectionOperations:
     get:

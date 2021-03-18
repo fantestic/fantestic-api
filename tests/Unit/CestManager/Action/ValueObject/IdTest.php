@@ -3,9 +3,9 @@
 declare(strict_types = 1);
 namespace App\Tests\Unit\CestManager\Action\ValueObject;
 
-use App\CestManager\Action\ValueObject\Id;
+use App\CestManager\Domain\ValueObject\Action\Id;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use App\CestManager\Exception\ValueObject\InvalidIdentifierStringException;
+use App\CestManager\Domain\Exception\ValueObject\InvalidIdentifierStringException;
 
 /**
  * 

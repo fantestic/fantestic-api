@@ -1,4 +1,4 @@
-App\CestManager\Action\Entity\Action:
+App\CestManager\Domain\Entity\Action:
   description: 'A action which can be used inside Scenarios'
   
   id:
