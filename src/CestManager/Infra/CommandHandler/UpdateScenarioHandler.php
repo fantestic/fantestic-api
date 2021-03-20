@@ -8,6 +8,7 @@ use App\CestManager\Domain\Command\UpdateScenario;
 use App\CestManager\Infra\Factory\CollectionIdFactory;
 use Exception;
 use Fantestic\CestManager\CestWriter;
+use Fantestic\CestManager\CestReader;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 /**
@@ -21,6 +22,7 @@ final class UpdateScenarioHandler implements MessageHandlerInterface
 {
     public function __construct(
         private CestWriter $cestWriter,
+        private CestReader $cestReader,
         private CollectionIdFactory $collectionIdFactory
     ) { }
 
@@ -28,15 +30,22 @@ final class UpdateScenarioHandler implements MessageHandlerInterface
     public function __invoke(UpdateScenario $updateScenario) :void
     {
         try {
-            $collectionEntity = new Collection(
+            $collection = new Collection(
                 $this->collectionIdFactory->fromScenarioId(
                     $updateScenario->getScenario()->getId()
                 )
             );
-            $this->cestWriter->updateScenario(
-                $collectionEntity,
-                $updateScenario->getScenario()
-            );
+            if (!$this->cestReader->hasScenario($collection, $updateScenario->getScenario())) {
+                $this->cestWriter->createScenario(
+                    $collection,
+                    $updateScenario->getScenario()
+                );
+            } else {
+                $this->cestWriter->updateScenario(
+                    $collection,
+                    $updateScenario->getScenario()
+                );
+            }
         } catch (Exception $e) {
             throw $e;
         }

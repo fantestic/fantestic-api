@@ -8,6 +8,7 @@ use ApiPlatform\Core\DataProvider\ItemDataProviderInterface;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 use App\CestManager\Infra\Repository\ScenarioRepository;
 use App\CestManager\Domain\ValueObject\Scenario\Id as ScenarioId;
+use Fantestic\CestManager\Exception\MethodNotFoundException;
 
 /**
  * DataProvider to load Scenarios into ApiPlatform
@@ -38,6 +39,10 @@ final class ItemDataProvider implements ItemDataProviderInterface, RestrictedDat
      */
     public function getItem(string $resourceClass, $id, ?string $operationName = null, array $context = []) :?Scenario
     {
-        return $this->scenarioRepository->find(ScenarioId::fromString($id));
+        try {
+            return $this->scenarioRepository->find(ScenarioId::fromString($id));
+        } catch (MethodNotFoundException $e) {
+            return null;
+        }
     }
 }
