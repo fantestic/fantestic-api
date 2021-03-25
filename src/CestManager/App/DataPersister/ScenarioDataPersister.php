@@ -66,9 +66,20 @@ final class ScenarioDataPersister implements ContextAwareDataPersisterInterface
         }
     }
 
-
-    public function remove($data, array $context = []) :void
+    /**
+     * 
+     * @param Scenario $data 
+     * @param array $context 
+     * @return void 
+     */
+    public function remove($scenario, array $context = []) :void
     {
-        $this->bus->dispatch(new RemoveScenario($data));
+        /*
+        $scenario->setCollection(
+            new Collection(
+                $this->collectionIdFactory->fromScenarioId($scenario->getId())
+            )
+        );*/
+        $this->bus->dispatch(new RemoveScenario($scenario));
     }
 }

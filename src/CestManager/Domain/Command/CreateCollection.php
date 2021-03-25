@@ -6,7 +6,7 @@ namespace App\CestManager\Domain\Command;
 use App\CestManager\Domain\Entity\Collection;
 
 /**
- * Command to delete a Collection from the system.
+ * Command to create a Collection.
  * 
  * @package Fantestic/ApiPlatform
  * @author Gerald Baumeister <gerald@fantestic.io>

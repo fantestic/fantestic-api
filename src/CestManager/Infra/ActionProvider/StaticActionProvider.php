@@ -23,13 +23,18 @@ class StaticActionProvider implements ActionProviderInterface
         $actions = [
             [
                 'see',
-                'I see $text',
+                'I expect to see $text',
                 [['name' => '$text', 'providers' => []]]
             ],
             [
                 'dontSee',
-                'I dont see $text',
+                'I expect to not see $text',
                 [['name' => '$text', 'providers' => []]]
+            ],
+            [
+                'wait',
+                'I wait $seconds seconds',
+                [['name' => '$seconds', 'providers' => []]]
             ],
             [
                 'amOnPage',

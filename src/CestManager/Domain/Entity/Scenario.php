@@ -22,9 +22,10 @@ final class Scenario implements ScenarioInterface
     private Id $id;
 
     /**
-     * @var Collection
-     */
+     * @Xvar Collection
+     *
     private ?Collection $collection = null;
+    */
 
     /**
      * @var Step[]
@@ -66,11 +67,18 @@ final class Scenario implements ScenarioInterface
         $this->id = $id;
         return $this;
     }
-
+/*
     public function getCollection() :?Collection
     {
         return $this->collection;
     }
+
+    public function setCollection(Collection $collection) :self
+    {
+        $this->collection = $collection;
+        return $this;
+    }
+    */
 
     /**
      * 

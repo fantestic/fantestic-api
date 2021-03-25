@@ -7,7 +7,7 @@ use ApiPlatform\Core\Exception\InvalidIdentifierException;
 use App\CestManager\Domain\ValueObject\Collection\Id;
 use App\CestManager\Domain\Exception\ValueObject\InvalidIdentifierStringException;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use App\CestManager\Infra\Factory\CollectionIdFactory;
+use App\CestManager\Domain\ValueObject\Collection\Id as CollectionId;
 
 /**
  * 
@@ -18,14 +18,10 @@ use App\CestManager\Infra\Factory\CollectionIdFactory;
  */
 final class IdDenormalizer implements DenormalizerInterface
 {
-    public function __construct(
-        private CollectionIdFactory $collectionIdFactory
-    ) {}
-
     public function denormalize($data, string $type, ?string $format = null, array $context = [])
     {
         try {
-            return $this->collectionIdFactory->fromStringRepr($data);
+            return CollectionId::fromStringRepr($data);
         } catch (InvalidIdentifierStringException $e) {
             throw new InvalidIdentifierException($e->getMessage());
         }
@@ -35,5 +31,4 @@ final class IdDenormalizer implements DenormalizerInterface
     {
         return is_a($type, id::class, true);
      }
-    
 }

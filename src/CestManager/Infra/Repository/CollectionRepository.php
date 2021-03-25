@@ -6,7 +6,9 @@ namespace App\CestManager\Infra\Repository;
 use App\CestManager\Domain\Entity\Collection;
 use App\CestManager\Domain\Repository\CollectionRepositoryInterface;
 use App\CestManager\Domain\ValueObject\Collection\Id as CollectionId;
-use App\CestManager\Infra\Factory\CollectionIdFactory;
+use App\CestManager\Infra\FantesticBridge\CollectionAdapter;
+use App\CestManager\Infra\FantesticBridge\CollectionAdapterFactory;
+use App\CestManager\Infra\FantesticBridge\CollectionIdFactory;
 use Fantestic\CestManager\Finder;
 
 /**
@@ -20,7 +22,8 @@ class CollectionRepository implements CollectionRepositoryInterface
 {
     public function __construct(
         private Finder $finder,
-        private CollectionIdFactory $collectionIdFactory
+        private CollectionIdFactory $collectionIdFactory,
+        private CollectionAdapterFactory $collectionAdapterFactory
     ) {}
 
 
@@ -32,7 +35,9 @@ class CollectionRepository implements CollectionRepositoryInterface
     public function findAll() :iterable
     {
         foreach ($this->finder->listFiles() as $path) {
-            yield new Collection($this->collectionIdFactory->fromSubpath($path));
+            yield new Collection(
+                $this->collectionIdFactory->makeFromSubpath($path)
+            );
         }
     }
 
@@ -45,7 +50,8 @@ class CollectionRepository implements CollectionRepositoryInterface
      */
     public function find(CollectionId $id) :?Collection
     {
-        if ($this->finder->hasFile($id->getSubpath())) {
+        $adapter = $this->collectionAdapterFactory->makeFromCollectionId($id);
+        if ($this->finder->hasFile($adapter->getSubpath())) {
             return new Collection($id);
         } else {
             return null;

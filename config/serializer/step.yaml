@@ -1,0 +1,8 @@
+#App\CestManager\Domain\ValueObject\Step:
+#  attributes:
+#    position:
+#      groups: ['read', 'write']
+ #   action:
+ #     groups: ['read', 'write']
+  #  arguments:
+  #    groups: ['read', 'write']

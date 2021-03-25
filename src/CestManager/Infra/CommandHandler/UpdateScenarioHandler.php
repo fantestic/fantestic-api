@@ -5,7 +5,8 @@ namespace App\CestManager\Infra\CommandHandler;
 
 use App\CestManager\Domain\Entity\Collection;
 use App\CestManager\Domain\Command\UpdateScenario;
-use App\CestManager\Infra\Factory\CollectionIdFactory;
+use App\CestManager\Domain\ValueObject\Collection\Id as CollectionId;
+use App\CestManager\Infra\FantesticBridge\CollectionAdapterFactory;
 use Exception;
 use Fantestic\CestManager\CestWriter;
 use Fantestic\CestManager\CestReader;
@@ -23,7 +24,7 @@ final class UpdateScenarioHandler implements MessageHandlerInterface
     public function __construct(
         private CestWriter $cestWriter,
         private CestReader $cestReader,
-        private CollectionIdFactory $collectionIdFactory
+        private CollectionAdapterFactory $collectionAdapterFactory
     ) { }
 
 
@@ -31,18 +32,22 @@ final class UpdateScenarioHandler implements MessageHandlerInterface
     {
         try {
             $collection = new Collection(
-                $this->collectionIdFactory->fromScenarioId(
-                    $updateScenario->getScenario()->getId()
+                CollectionId::fromStringRepr(
+                    $updateScenario->getScenario()->getId()->getCollectionIdRepr()
                 )
             );
-            if (!$this->cestReader->hasScenario($collection, $updateScenario->getScenario())) {
+            $collectionAdapter = $this->collectionAdapterFactory->makeFromCollection($collection);
+            if (!$this->cestReader->hasScenario(
+                $collectionAdapter,
+                $updateScenario->getScenario())
+            ) {
                 $this->cestWriter->createScenario(
-                    $collection,
+                    $collectionAdapter,
                     $updateScenario->getScenario()
                 );
             } else {
                 $this->cestWriter->updateScenario(
-                    $collection,
+                    $collectionAdapter,
                     $updateScenario->getScenario()
                 );
             }

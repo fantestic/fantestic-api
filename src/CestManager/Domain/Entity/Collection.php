@@ -5,7 +5,6 @@ namespace App\CestManager\Domain\Entity;
 
 use App\CestManager\Domain\Entity\Scenario;
 use App\CestManager\Domain\ValueObject\Collection\Id;
-use Fantestic\CestManager\Contract\CollectionInterface;
 
 /**
  * 
@@ -14,7 +13,7 @@ use Fantestic\CestManager\Contract\CollectionInterface;
  * @author Gerald Baumeister <gerald@fantestic.io>
  * @license http://www.apache.org/licenses/LICENSE-2.0
  */
-final class Collection implements CollectionInterface
+final class Collection
 {
     private Id $id;
 
@@ -28,31 +27,6 @@ final class Collection implements CollectionInterface
     {
         $this->id = $id;
     }
-
-
-    public function getClassname(): string
-    {
-        return $this->id->getClassname();
-    }
-
-
-    public function getNamespace(): string
-    {
-        return $this->id->getNamespace();
-    }
-
-
-    public function getSubpath(): string
-    {
-        return $this->id->getSubpath();
-    }
-
-
-    public function getFullyQualifiedClassname(): string
-    {
-        return $this->id->getFullyQualifiedClassname();
-    }
-
 
     public function getId() :Id
     {

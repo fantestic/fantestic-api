@@ -6,9 +6,10 @@ namespace App\CestManager\Infra\Repository;
 use App\CestManager\Infra\Repository\CollectionRepository;
 use App\CestManager\Domain\Entity\Scenario;
 use App\CestManager\Domain\ValueObject\Scenario\Id as ScenarioId;
+use App\CestManager\Domain\ValueObject\Collection\Id as CollectionId;
 use App\CestManager\Domain\Exception\ValueObject\InvalidIdentifierStringException;
 use App\CestManager\Domain\Repository\ScenarioRepositoryInterface;
-use App\CestManager\Infra\Factory\CollectionIdFactory;
+use App\CestManager\Infra\FantesticBridge\CollectionAdapterFactory;
 use Fantestic\CestManager\CestReader;
 use Fantestic\CestManager\Exception\ClassNotFoundException;
 use InvalidArgumentException;
@@ -25,7 +26,7 @@ class ScenarioRepository implements ScenarioRepositoryInterface
     public function __construct(
         private CestReader $cestReader,
         private CollectionRepository $collectionRepository,
-        private CollectionIdFactory $collectionIdFactory
+        private CollectionAdapterFactory $collectionAdapterFactory
     ) {}
 
 
@@ -40,13 +41,13 @@ class ScenarioRepository implements ScenarioRepositoryInterface
     {
         try {
             $collection = $this->collectionRepository->find(
-                $this->collectionIdFactory->fromScenarioId($id)
+                CollectionId::fromStringRepr($id->getCollectionIdRepr())
             );
             if (is_null($collection)) {
                 return null;
             }
             $scenarioDto = $this->cestReader->getScenario(
-                $collection,
+                $this->collectionAdapterFactory->makeFromCollection($collection),
                 new Scenario($id)
             );
             if (is_null($scenarioDto)) {
@@ -54,6 +55,7 @@ class ScenarioRepository implements ScenarioRepositoryInterface
             }
             return Scenario::fromDto($scenarioDto, $collection->getId());
         } catch (ClassNotFoundException $e) {
+            // drop the exception, as it's simply a 404
             return null;
         }
     }

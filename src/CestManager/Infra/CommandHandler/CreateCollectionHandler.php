@@ -5,6 +5,7 @@ namespace App\CestManager\Infra\CommandHandler;
 
 use Fantestic\CestManager\CestWriter;
 use App\CestManager\Domain\Command\CreateCollection;
+use App\CestManager\Infra\FantesticBridge\CollectionAdapterFactory;
 use Exception;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
@@ -18,14 +19,19 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 final class CreateCollectionHandler implements MessageHandlerInterface
 {
     public function __construct(
-        private CestWriter $cestWriter
+        private CestWriter $cestWriter,
+        private CollectionAdapterFactory $collectionAdapterFactory
     ) { }
 
 
     public function __invoke(CreateCollection $createCollection) :void
     {
         try {
-            $this->cestWriter->createCest($createCollection->getCollection());
+            $this->cestWriter->createCest(
+                $this->collectionAdapterFactory->makeFromCollection(
+                    $createCollection->getCollection()
+                )
+            );
         } catch (Exception $e) {
             throw $e;
         }

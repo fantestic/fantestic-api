@@ -1,5 +1,10 @@
 App\CestManager\Domain\Entity\Scenario:
   description: 'A collection of Scenarios'
+#  attributes:
+ #   normalization_context:
+ #     groups: ['read']
+ #   denormalization_context:
+ #     groups: ['write']
 #  id:
 #    generationStrategy: none
 
@@ -8,6 +13,7 @@ App\CestManager\Domain\Entity\Scenario:
       identifier: true
       generationStrategy: none
       writeable: true
+
 
   collectionOperations:
     get:

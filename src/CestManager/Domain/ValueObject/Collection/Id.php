@@ -17,9 +17,7 @@ final class Id
     const NS_SEPARATOR = '-';
 
     public function __construct(
-        private string $id,
-        private Prefix $prefix,
-        private Suffix $suffix
+        private string $id
     ) {
         if (1 !== preg_match('/^[a-z0-9_-]+$/i', $id)) {
             throw new InvalidIdentifierStringException(
@@ -28,61 +26,18 @@ final class Id
         }
     }
 
+    public static function fromStringRepr(string $stringRepr) :self
+    {
+        return new self($stringRepr);
+    }
 
     public function toString() :string
     {
         return $this->id;
     }
 
-
     public function __toString() :string
     {
         return $this->toString();
-    }
-
-
-    public function getClassname() :string
-    {
-        $fullyQualifiedName = $this->getFullyQualifiedClassname();
-        $classnameSeparatorPos = strrpos($fullyQualifiedName, '\\');
-        if (false === $classnameSeparatorPos) {
-            return $fullyQualifiedName;
-        } else {
-            return substr($fullyQualifiedName, $classnameSeparatorPos +1);
-        }
-    }
-
-
-    public function getNamespace() :string
-    {
-        $fullyQualifiedName = $this->getFullyQualifiedClassname();
-        $classnameSeparatorPos = strrpos($fullyQualifiedName, '\\');
-        if (false === $classnameSeparatorPos) {
-            return $fullyQualifiedName;
-        } else {
-            return substr($fullyQualifiedName, 0, $classnameSeparatorPos);
-        }
-    }
-
-
-    public function getFullyQualifiedClassname() :string
-    {
-        return 
-            $this->prefix . 
-            str_replace(self::NS_SEPARATOR, '\\', $this->id) .
-            $this->suffix;
-    }
-
-
-    public function getSubpath() :string
-    {
-        return 
-            str_replace(
-                self::NS_SEPARATOR,
-                DIRECTORY_SEPARATOR,
-                $this->toString()
-            ) .
-            $this->suffix
-            . '.php';
     }
 }

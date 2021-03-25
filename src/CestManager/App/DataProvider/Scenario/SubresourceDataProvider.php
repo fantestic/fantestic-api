@@ -4,15 +4,17 @@ declare(strict_types = 1);
 namespace App\CestManager\App\DataProvider\Scenario;
 
 use App\CestManager\Infra\Repository\CollectionRepository;
+use App\CestManager\Infra\FantesticBridge\CollectionAdapterFactory;
 use App\CestManager\Domain\Exception\ValueObject\InvalidIdentifierStringException;
 use App\CestManager\Domain\Entity\Scenario;
+use App\CestManager\Domain\ValueObject\Collection\Id as CollectionId;
 use ApiPlatform\Core\DataProvider\RestrictedDataProviderInterface;
 use ApiPlatform\Core\DataProvider\SubresourceDataProviderInterface;
 use Fantestic\CestManager\CestReader;
 use Fantestic\CestManager\Exception\ClassNotFoundException;
 use LogicException;
 use Fantestic\CestManager\Exception\UnprocessableScenarioException;
-use App\CestManager\Infra\Factory\CollectionIdFactory;
+
 
 /**
  * DataProvider to load Collections into ApiPlatform
@@ -27,7 +29,7 @@ final class SubresourceDataProvider implements RestrictedDataProviderInterface, 
     public function __construct(
         private CollectionRepository $collectionRepository,
         private CestReader $cestReader,
-        private CollectionIdFactory $collectionIdFactory
+        private CollectionAdapterFactory $collectionAdapterFactory
     ) { }
 
 
@@ -50,10 +52,11 @@ final class SubresourceDataProvider implements RestrictedDataProviderInterface, 
      */
     public function getSubresource(string $resourceClass, array $identifiers, array $context, ?string $operationName = null) :?iterable
     {
-        $collectionId = $this->collectionIdFactory->fromStringRepr($identifiers['id']['id']);
+        $collectionId = CollectionId::fromStringRepr($identifiers['id']['id']);
+        $adapter = $this->collectionAdapterFactory->makeFromCollectionId($collectionId);
         try {
             $collectionDto = $this->cestReader->getCollection(
-                $collectionId->getFullyQualifiedClassname()
+                $adapter->getFullyQualifiedClassname()
             );
             foreach ($collectionDto->getScenarios() as $scenario) {
                 yield Scenario::fromDto($scenario, $collectionId);

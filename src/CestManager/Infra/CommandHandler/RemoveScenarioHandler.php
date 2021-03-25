@@ -5,6 +5,9 @@ namespace App\CestManager\Infra\CommandHandler;
 
 use Fantestic\CestManager\CestWriter;
 use App\CestManager\Domain\Command\RemoveScenario;
+use App\CestManager\Domain\Entity\Collection;
+use App\CestManager\Domain\ValueObject\Collection\Id as CollectionId;
+use App\CestManager\Infra\FantesticBridge\CollectionAdapterFactory;
 use Exception;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
@@ -18,14 +21,21 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 final class RemoveScenarioHandler implements MessageHandlerInterface
 {
     public function __construct(
-        private CestWriter $cestWriter
+        private CestWriter $cestWriter,
+        private CollectionAdapterFactory $fantesticBridge
     ) { }
 
 
     public function __invoke(RemoveScenario $removeScenario) :void
     {
         try {
-            throw new Exception('Not implemented');
+            $scenario = $removeScenario->getScenario();
+            $collectionId = CollectionId::fromStringRepr($scenario->getId()->getCollectionIdRepr());
+            
+            $this->cestWriter->removeScenario(
+                $this->collectionAdapterFactory->makeFromCollectionId($collectionId),
+                $scenario
+            );
         } catch (Exception $e) {
             throw $e;
         }

@@ -1,0 +1,13 @@
+#App\CestManager\Domain\ValueObject\Scenario\Step:
+#  description: 'A single step in a Scenario'
+#
+#  properties:
+#    position:
+#      identifier: true
+#      generationStrategy: none
+#      writeable: true
+#  attributes:
+#    normalization_context:
+ #     groups: ['read']
+#    denormalization_context:
+#      groups: ['write']
