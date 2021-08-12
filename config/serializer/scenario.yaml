@@ -1,0 +1,8 @@
+#App\CestManager\Domain\Entity\Scenario:
+#  attributes:
+#    id:
+ #     groups: ['read', 'write']
+#    collection:
+#      groups: []
+#    steps:
+#      groups: ['read', 'write']

@@ -11,19 +11,54 @@ services:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
 
+    # autowire for Fantestic/CestManager. Should be handled via separate bundle, and removed here.
+    Fantestic\CestManager\:
+        resource: '../vendor/fantestic/cest-manager/src'
+        autowire: true
+    Fantestic\CestManager\Finder:
+        arguments:
+            - '%kernel.project_dir%/../../../dngz/codebases/wol.wol/tests/acceptance/src/Suites/Acceptance'
+
+
+    # help api_platform
+#    App\CestManager\App\Normalizer\Collection\IdDenormalizer:
+#        tags:
+#            - { name: api_platform.identifier.denormalizer }
+#    App\CestManager\App\Normalizer\Collection\IdNormalizer:
+#        tags:
+#            - { name: api_platform.identifier.normalizer }
+#    App\CestManager\App\Normalizer\Action\IdNormalizer:
+#        tags:
+#            - { name: api_platform.identifier.normalizer }
+#    App\CestManager\App\Normalizer\Scenario\IdNormalizer:
+#        tags:
+#            - { name: api_platform.identifier.normalizer }
+#    App\CestManager\App\Normalizer\Scenario\IdDenormalizer:
+#        tags:
+#            - { name: api_platform.identifier.denormalizer }
+
+
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/'
         exclude:
             - '../src/DependencyInjection/'
-            - '../src/Entity/'
             - '../src/Kernel.php'
             - '../src/Tests/'
-
-    # Was not visible in Tests?
-    App\CodeParser\Factory\CestRepFactory:
-        public: true
+    
+    # TODO load from configuration
+#    App\CestManager\Infra\FantesticBridge\CollectionAdapterFactory:
+#        arguments:
+#            - 'Wol\Test\Suites\Acceptance\'
+#            - 'Cest'
+#    App\CestManager\Infra\FantesticBridge\CollectionIdFactory:
+#        arguments:
+#            - 'Wol\Test\Suites\Acceptance\'
+#            - 'Cest'
+#    App\CestManager\Infra\ActionProvider\ActionProviderCollection:
+#        arguments:
+#            - !tagged_iterator fantestic.action_provider
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
@@ -33,4 +68,3 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
-    PhpParser\ParserFactory:
