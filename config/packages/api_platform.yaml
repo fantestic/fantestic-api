@@ -2,9 +2,9 @@ api_platform:
     version: '0.0.1'
     show_webby: false
     mapping:
-        paths: ['%kernel.project_dir%/config/api_platform/resources']
+        paths: ['%kernel.project_dir%/vendor/fantestic/cestmanager-bundle/Resources/config/resources']
     resource_class_directories:
-        - '%kernel.project_dir%/src/CestManager/Domain/Entity'
+        - '%kernel.project_dir%/vendor/fantestic/cestmanager-bundle/Domain/Entity'
     patch_formats:
         json: ['application/merge-patch+json']
     swagger:

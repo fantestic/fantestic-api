@@ -17,25 +17,25 @@ services:
         autowire: true
     Fantestic\CestManager\Finder:
         arguments:
-            - '%kernel.project_dir%/cests/src/Suites/Acceptance'
+            - '%kernel.project_dir%/../../../dngz/codebases/wol.wol/tests/acceptance/src/Suites/Acceptance'
 
 
     # help api_platform
-    App\CestManager\App\Normalizer\Collection\IdDenormalizer:
-        tags:
-            - { name: api_platform.identifier.denormalizer }
-    App\CestManager\App\Normalizer\Collection\IdNormalizer:
-        tags:
-            - { name: api_platform.identifier.normalizer }
-    App\CestManager\App\Normalizer\Action\IdNormalizer:
-        tags:
-            - { name: api_platform.identifier.normalizer }
-    App\CestManager\App\Normalizer\Scenario\IdNormalizer:
-        tags:
-            - { name: api_platform.identifier.normalizer }
-    App\CestManager\App\Normalizer\Scenario\IdDenormalizer:
-        tags:
-            - { name: api_platform.identifier.denormalizer }
+#    App\CestManager\App\Normalizer\Collection\IdDenormalizer:
+#        tags:
+#            - { name: api_platform.identifier.denormalizer }
+#    App\CestManager\App\Normalizer\Collection\IdNormalizer:
+#        tags:
+#            - { name: api_platform.identifier.normalizer }
+#    App\CestManager\App\Normalizer\Action\IdNormalizer:
+#        tags:
+#            - { name: api_platform.identifier.normalizer }
+#    App\CestManager\App\Normalizer\Scenario\IdNormalizer:
+#        tags:
+#            - { name: api_platform.identifier.normalizer }
+#    App\CestManager\App\Normalizer\Scenario\IdDenormalizer:
+#        tags:
+#            - { name: api_platform.identifier.denormalizer }
 
 
     # makes classes in src/ available to be used as services
@@ -46,26 +46,24 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Kernel.php'
             - '../src/Tests/'
-            - '../src/CestManager/Domain/Entity/'
-            - '../src/CestManager/Domain/ValueObject/'
     
     # TODO load from configuration
-    App\CestManager\Infra\FantesticBridge\CollectionAdapterFactory:
-        arguments:
-            - 'Cests\Suites\Acceptance\'
-            - 'Cest'
-    App\CestManager\Infra\FantesticBridge\CollectionIdFactory:
-        arguments:
-            - 'Cests\Suites\Acceptance\'
-            - 'Cest'
-    App\CestManager\Infra\ActionProvider\ActionProviderCollection:
-        arguments:
-            - !tagged_iterator fantestic.action_provider
+#    App\CestManager\Infra\FantesticBridge\CollectionAdapterFactory:
+#        arguments:
+#            - 'Wol\Test\Suites\Acceptance\'
+#            - 'Cest'
+#    App\CestManager\Infra\FantesticBridge\CollectionIdFactory:
+#        arguments:
+#            - 'Wol\Test\Suites\Acceptance\'
+#            - 'Cest'
+#    App\CestManager\Infra\ActionProvider\ActionProviderCollection:
+#        arguments:
+#            - !tagged_iterator fantestic.action_provider
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
-    App\CestManager\App\Controller\:
-        resource: '../src/CestManager/App/Controller/'
+    App\Controller\:
+        resource: '../src/Controller/'
         tags: ['controller.service_arguments']
 
     # add more service definitions when explicit configuration is needed

@@ -79,6 +79,9 @@
     "doctrine/dbal": {
         "version": "2.12.1"
     },
+    "doctrine/deprecations": {
+        "version": "v0.5.3"
+    },
     "doctrine/doctrine-bundle": {
         "version": "2.0",
         "recipe": {
@@ -133,6 +136,9 @@
     },
     "fantestic/cest-manager": {
         "version": "dev-dev"
+    },
+    "fantestic/cestmanager-bundle": {
+        "version": "dev-main"
     },
     "fig/link-util": {
         "version": "1.1.2"

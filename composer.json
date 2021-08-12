@@ -19,6 +19,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.8",
         "fantestic/cest-manager": "dev-dev",
+        "fantestic/cestmanager-bundle": "dev-main",
         "nelmio/cors-bundle": "^2.1",
         "phpdocumentor/reflection-docblock": "^5.2",
         "symfony/asset": "5.2.*",
@@ -49,8 +50,7 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/",
-            "Cests\\": "cests/src"
+            "App\\": "src/"
         }
     },
     "autoload-dev": {
@@ -88,6 +88,10 @@
         {
             "type": "vcs",
             "url": "https://github.com/fantestic/cestmanager.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/fantestic/cestmanager-bundle.git"
         }
     ]
 }

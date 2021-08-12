@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\CestManager\Infra\Contract\ActionProviderInterface;
+//use App\CestManager\Infra\Contract\ActionProviderInterface;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
@@ -40,8 +40,8 @@ class Kernel extends BaseKernel
 
     protected function build(ContainerBuilder $container): void
     {
-        $container->registerForAutoconfiguration(ActionProviderInterface::class)
-            ->addTag(ActionProviderInterface::SERVICE_TAG)
-        ;
+        //$container->registerForAutoconfiguration(ActionProviderInterface::class)
+        //    ->addTag(ActionProviderInterface::SERVICE_TAG)
+        //;
     }
 }
